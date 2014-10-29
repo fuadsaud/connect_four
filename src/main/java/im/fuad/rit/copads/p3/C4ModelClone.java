@@ -8,8 +8,8 @@ class C4ModelClone implements C4ModelListener {
         this.board = board;
     }
 
-    public void markerAdded(Integer player, Integer row, Integer col) {
-        this.board.play(player, row, col);
+    public void markerAdded(Player player, Integer row, Integer col) {
+        this.board.play(player.getNumber(), row, col);
         this.modelListener.markerAdded(player, row, col);
     }
 

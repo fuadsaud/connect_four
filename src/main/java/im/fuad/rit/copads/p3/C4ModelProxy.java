@@ -33,7 +33,7 @@ class C4ModelProxy implements C4ViewListener {
     public void clear() throws IOException { sendClearMessage(); }
 
     public void join(String playerName) throws IOException {
-        if (me == null) {
+        if (this.me == null) {
             sendJoinMessage(playerName);
 
             new Thread(new ServerReader()).start();
@@ -65,6 +65,10 @@ class C4ModelProxy implements C4ViewListener {
         this.writer.flush();
     }
 
+    private Player playerForNumber(Integer playerNumber) {
+        return playerNumber == myNumber ? me : opponent;
+    }
+
     private class ServerReader implements Runnable {
         public void run() {
             try {
@@ -77,14 +81,14 @@ class C4ModelProxy implements C4ViewListener {
                 while ((line = reader.readLine()) != null) {
                     System.err.println("RECEIVED: " + line);
 
-                    List<String> commandParts = Arrays.asList(line.split(" "));
-
-                    processCommand(commandParts);
+                    processCommand(Arrays.asList(line.split(" ")));
                 }
 
             } catch(IOException e) {
             } finally {
-                try { socket.close(); } catch (IOException e) {}
+                try { socket.close(); }
+                catch (IOException e) {}
+                finally { System.exit(0); }
             }
         }
 
@@ -124,12 +128,11 @@ class C4ModelProxy implements C4ViewListener {
             if (playerNumber == 0)
                 modelListener.gameOver();
             else
-                modelListener.turn(
-                        playerNumber == myNumber ? me : opponent);
+                modelListener.turn(playerForNumber(playerNumber));
         }
 
         private void add(Integer playerNumber, Integer row, Integer col) {
-            modelListener.markerAdded(playerNumber, row, col);
+            modelListener.markerAdded(playerForNumber(playerNumber), row, col);
         }
 
         private void clear() { modelListener.cleared(); }

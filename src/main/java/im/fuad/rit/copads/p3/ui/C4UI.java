@@ -107,7 +107,7 @@ public class C4UI implements C4ModelListener {
             this.frame.setVisible(true);
     }
 
-    public void markerAdded(Integer player, Integer row,  Integer col) { repaint(); }
+    public void markerAdded(Player player, Integer row,  Integer col) { repaint(); }
 
     public void cleared() { repaint(); }
 

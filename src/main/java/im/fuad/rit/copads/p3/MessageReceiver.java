@@ -24,8 +24,6 @@ class MessageReceiver {
         String line;
 
         while ((line = reader.readLine()) != null) {
-            System.err.println("RECEIVED: " + line);
-
             processCommand(Arrays.asList(line.split(" ")));
         }
     }

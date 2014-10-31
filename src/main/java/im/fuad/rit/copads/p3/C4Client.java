@@ -22,8 +22,6 @@ public class C4Client {
 
             socket.connect(this.address);
 
-            log("connected");
-
             C4Board board = new C4Board();
             C4ModelClone modelClone = new C4ModelClone(board);
             C4ModelProxy modelProxy = new C4ModelProxy(socket);
@@ -34,10 +32,9 @@ public class C4Client {
             modelProxy.setModelListener(modelClone);
 
             modelProxy.join(playerName);
-
-            log("wired");
         } catch(IOException e) {
-            e.printStackTrace();
+            log("An IO error ocurred");
+            System.exit(1);
         }
     }
 

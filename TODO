@@ -1,5 +1,3 @@
 - Implement diagonal win-condition check
-- Figure out what message to display when board is full (tie)
 - Handle IO errors correctly
-- Remove debugging code
 - Prepare for submission

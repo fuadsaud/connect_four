@@ -80,22 +80,27 @@ class C4Board implements C4BoardIntf {
         }
 
         // check diagonally
-        for (int j = 0; j < COLS; j++) {
-            for (int i = 0; i < ROWS - 1; i++) {
-                int thisCell = this.board[i][j];
-                int nextCell = this.board[i + 1][j];
+        for (int i = ROWS - 1; i > 0; i--) {
+             for (int j = 0, x = i; x <= COLS - 1; j++, x++) {
+                int thisCell = this.board[x][j];
 
-                if (thisCell != 0 && thisCell == nextCell)
-                    positions.add(new int[]{ i, j });
-                else
+                try {
+                    int nextCell = this.board[x + 1][j + 1];
+
+                    if (thisCell != 0 && thisCell == nextCell)
+                        positions.add(new int[]{ x, j });
+                    else
+                        positions.clear();
+
+                    if (positions.size() == 3) {
+                        return new int[] {
+                            positions.get(0)[0], positions.get(0)[1], x + 1, j + 1
+                        };
+                    }
+                } catch(IndexOutOfBoundsException e) {
                     positions.clear();
-
-                if (positions.size() == 3) {
-                    return new int[] {
-                        positions.get(0)[0], positions.get(0)[1], i + 1, j
-                    };
                 }
-            }
+             }
         }
 
         return null;

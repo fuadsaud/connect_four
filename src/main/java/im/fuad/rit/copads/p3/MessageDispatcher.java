@@ -27,10 +27,8 @@ class MessageDispatcher {
     }
 
     private void sendMessage(String message) throws IOException {
-        System.err.println("SENDING: " + message);
         this.writer.write(message);
         this.writer.newLine();
         this.writer.flush();
     }
-
 }

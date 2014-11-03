@@ -12,10 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 import java.io.IOException;
 
+import im.fuad.rit.copads.p3.C4Client;
 import im.fuad.rit.copads.p3.C4BoardIntf;
 import im.fuad.rit.copads.p3.C4ViewListener;
 import im.fuad.rit.copads.p3.C4ModelListener;
@@ -130,7 +130,7 @@ public class C4UI implements C4ModelListener {
         try {
             this.viewListener.addMarker(column);
         } catch(IOException e) {
-            JOptionPane.showMessageDialog(frame, "DEU RUIM GALERE");
+            terminate();
         }
     }
 
@@ -138,7 +138,7 @@ public class C4UI implements C4ModelListener {
         try {
             this.viewListener.clear();
         } catch(IOException e) {
-            JOptionPane.showMessageDialog(frame, "DEU RUIM GALERE");
+            terminate();
         }
      }
 
@@ -147,4 +147,6 @@ public class C4UI implements C4ModelListener {
     private void setMessage(String message) {
         this.message.setText(message);
     }
+
+    private void terminate() { C4Client.terminate(); }
 }

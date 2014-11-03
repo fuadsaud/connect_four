@@ -1,5 +1,11 @@
 package im.fuad.rit.copads.p3;
 
+/**
+ * Model class for a player in the game. It's basically a value object to group values that need to
+ * be passed along together.
+ *
+ * @author Fuad Saud <ffs3415@rit.edu>
+ */
 public class Player {
     private Integer number;
     private String name;

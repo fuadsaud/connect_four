@@ -9,10 +9,22 @@ import java.util.Arrays;
 
 import im.fuad.rit.copads.p3.C4ServerListener;
 
+/**
+ * This class is responsible for listening to incoming messages from the server through a socket
+ * and based on these fire appropriate methods on a server listener object.
+ *
+ * @author Fuad Saud <ffs3415@rit.edu>
+ */
 class MessageReceiver {
     private C4ServerListener listener;
     private BufferedReader reader;
 
+    /**
+     * Initializes a receiver but don't start reading from the socket.
+     *
+     * @param socket the socket to be read from; it is expected to be already connected.
+     * @param listener the listener on which to fire events when messages are received.
+     */
     public MessageReceiver(Socket socket, C4ServerListener listener) throws IOException {
         this.listener = listener;
         this.reader =
@@ -20,6 +32,9 @@ class MessageReceiver {
                     new InputStreamReader(socket.getInputStream()));
     }
 
+    /**
+     * Starts reading from the socket.
+     */
     public void listen() throws IOException {
         String line;
 

@@ -107,14 +107,29 @@ public class C4UI implements C4ModelListener {
             this.frame.setVisible(true);
     }
 
+    /**
+     * @see C4ModelListener.markerAdded()
+     */
     public void markerAdded(Player player, Integer row,  Integer col) { repaint(); }
 
+    /**
+     * @see C4ModelListener.cleared()
+     */
     public void cleared() { repaint(); }
 
+    /**
+     * @see C4ModelListener.gameStarted()
+     */
     public void gameStarted() { newGameButton.setEnabled(true); repaint(); }
 
+    /**
+     * @see C4ModelListener.gameOver()
+     */
     public void gameOver() { setMessage("Game over"); }
 
+    /**
+     * @see C4ModelListener.turn()
+     */
     public void turn(Player player) {
         if (player.isMe())
             setMessage("Your turn");
@@ -122,6 +137,11 @@ public class C4UI implements C4ModelListener {
             setMessage(player.getName() + "'s turn");
     }
 
+    /**
+     * Sets this object's view listener.
+     *
+     * @param listener the view listener to be registered.
+     */
     public void setViewListener(C4ViewListener listener) {
         this.viewListener = listener;
     }
@@ -140,7 +160,7 @@ public class C4UI implements C4ModelListener {
         } catch(IOException e) {
             terminate();
         }
-     }
+    }
 
     private void repaint() { this.boardPanel.repaint(); }
 

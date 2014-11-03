@@ -28,16 +28,14 @@ class C4ModelProxy implements C4ViewListener {
     }
 
     /**
-     * Informs the model that a marker should be added for this player in the given column.
-     *
-     * @param column the column in which the marker is to be added.
+     * @see C4ViewListener.addMarker()
      */
     public void addMarker(Integer column) throws IOException {
         this.dispatcher.sendAddMarkerMessage(this.myNumber, column);
     }
 
     /**
-     * Informs the model to clear tha game board.
+     * @see C4ViewListener.clear()
      */
     public void clear() throws IOException {
         this.dispatcher.sendClearMessage();
@@ -94,20 +92,14 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * Sets this client's player number.
-         *
-         * @param playerNumber the player's number (1 or 2).
+         * @see C4ServerListener.number()
          */
         public void number(Integer playerNumber) {
             myNumber = playerNumber;
         }
 
         /**
-         * Registers a player in the session. If it is the opponent that's being registered it also
-         * fires the start event in the model listener.
-         *
-         * @param playerNumber the player's number (1 or 2).
-         * @param playerName the player's name.
+         * @see C4ServerListener.name()
          */
         public void name(Integer playerNumber, String playerName) {
             if (playerNumber == myNumber) {
@@ -120,9 +112,7 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * Initiates a new turn in the game for the given player.
-         *
-         * @param playerNumber the player's number (1 or 2).
+         * @see C4ServerListener.turn()
          */
         public void turn(Integer playerNumber) {
             if (playerNumber == 0)
@@ -132,18 +122,14 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * Add a marker for the given player in the given position.
-         *
-         * @param playerNumber the player's number (1 or 2).
-         * @param row the row in which to add the marker.
-         * @param column the column in which to add the marker.
+         * @see C4ServerListener.add()
          */
         public void add(Integer playerNumber, Integer row, Integer col) {
             modelListener.markerAdded(playerForNumber(playerNumber), row, col);
         }
 
         /**
-         * Clear the game board.`
+         * @see C4ServerListener.clear()
          */
         public void clear() { modelListener.cleared(); }
     }

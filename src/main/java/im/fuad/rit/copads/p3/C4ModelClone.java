@@ -19,20 +19,14 @@ class C4ModelClone implements C4ModelListener {
     }
 
     /**
-     * Hook to be called when a marker is added to the board. It adds the marker to the game
-     * board and fires the same event on the registered listener.
-     *
-     * @param player the player who's making the move.
-     * @param row the row in which the marker is being added.
-     * @param col the column in which the marker is being added.
+     * @see C4ModelListener.markerAdded()
      */
     public void markerAdded(Player player, Integer row, Integer col) {
         this.board.play(player.getNumber(), row, col); this.modelListener.markerAdded(player, row,
                 col); }
 
     /**
-     * Hook to be called when the board is cleared. It clears the board and fires the same event
-     * on the registered listener.
+     * @see C4ModelListener.cleared()
      */
     public void cleared() {
         this.board.clear();
@@ -41,20 +35,17 @@ class C4ModelClone implements C4ModelListener {
     }
 
     /**
-     * Hook to be called when the game starts. It fires the same event on the registered listener.
+     * @see C4ModelListener.gameStarted()
      */
     public void gameStarted() { this.modelListener.gameStarted(); }
 
     /**
-     * Hook to be called when the game ends. It fires the same event on the registered listener.
+     * @see C4ModelListener.gameOver()
      */
     public void gameOver() { this.modelListener.gameOver(); }
 
     /**
-     * Hook to be called when the a new turn starts. It fires the same event on the registered
-     * listener.
-     *
-     * @param player the player to which this new turn belongs.
+     * @see C4ModelListener.turn()
      */
     public void turn(Player player) { this.modelListener.turn(player); }
 

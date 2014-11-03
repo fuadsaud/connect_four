@@ -3,18 +3,29 @@ package im.fuad.rit.copads.p3;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Game board model implementation.
+ *
+ * @author Fuad Saud <ffs3415@rit.edu>
+ */
 class C4Board implements C4BoardIntf {
     private static final int PLAYER_1_MARK = 1;
     private static final int PLAYER_2_MARK = 2;
 
     private int[][] board;
 
+    /**
+     * Initializes an empty board.
+     */
     public C4Board() { clear(); }
 
-    public void play(int player, int col) {
-        play(player, firstFreeRow(col), col);
-    }
-
+    /**
+     * Adds a marker to the board.
+     *
+     * @param player the player number for which the move is being made (1 or 2).
+     * @param row the row in which the marker should be added.
+     * @param col the column in which the marker should be added.
+     */
     public void play(int player, int row, int col) {
         if (player != 1 && player != 2)
             throw new IllegalArgumentException("Player must be 1 or 2");
@@ -28,16 +39,32 @@ class C4Board implements C4BoardIntf {
         this.board[row][col] = player;
     }
 
+    /**
+     * Adds a marker to the board.
+     *
+     * @param player the player number for which the move is being made (1 or 2).
+     * @param row the row in which the marker should be added.
+     * @param col the column in which the marker should be added.
+     */
     public void clear() { this.board = new int[ROWS][COLS]; }
 
+    /**
+     * @see C4BoardIntf.hasPlayer1Marker();
+     */
     public boolean hasPlayer1Marker(int r, int c) {
         return this.board[r][c] == PLAYER_1_MARK;
     }
 
+    /**
+     * @see C4BoardIntf.hasPlayer2Marker();
+     */
     public boolean hasPlayer2Marker(int r, int c) {
         return this.board[r][c] == PLAYER_2_MARK;
     }
 
+    /**
+     * @see C4BoardIntf.hasWon();
+     */
     public int[] hasWon() {
         List<int[]> positions = new ArrayList<int[]>();
 
@@ -80,37 +107,30 @@ class C4Board implements C4BoardIntf {
         }
 
         // check diagonally
-        // for (int i = ROWS - 1; i > 0; i--) {
-        //      for (int j = 0, x = i; x <= COLS - 1; j++, x++) {
-        //         int thisCell = this.board[x][j];
+        // My algorithm for generating the diagonal indices was problematic and I couldn't find an
+        // acceptable solution so the diagonal indices were hardcoded on the DIAGONALS constant. The
+        // current solution works for a board of 6 rows and 7 columns only.
+        for (int[][] diagonal : DIAGONALS) {
+            for (int coord = 0; coord < diagonal.length - 1; coord++) {
+                int thisI = diagonal[coord][0], thisJ = diagonal[coord][1];
+                int nextI = diagonal[coord + 1][0], nextJ = diagonal[coord + 1][1];
 
-        //         try {
-        //             int nextCell = this.board[x + 1][j + 1];
+                int thisCell = this.board[thisI][thisJ];
+                int nextCell = this.board[nextI][nextJ];
 
-        //             if (thisCell != 0 && thisCell == nextCell)
-        //                 positions.add(new int[]{ x, j });
-        //             else
-        //                 positions.clear();
+                if (thisCell != 0 && thisCell == nextCell)
+                    positions.add(new int[] { thisI, thisJ });
+                else
+                    positions.clear();
 
-        //             if (positions.size() == 3) {
-        //                 return new int[] {
-        //                     positions.get(0)[0], positions.get(0)[1], x + 1, j + 1
-        //                 };
-        //             }
-        //         } catch(IndexOutOfBoundsException e) {
-        //             positions.clear();
-        //         }
-        //      }
-        // }
+                if (positions.size() == 3) {
+                    return new int[] {
+                        positions.get(0)[0], positions.get(0)[1], nextI, nextJ
+                    };
+                }
+            }
+        }
 
         return null;
-    }
-
-    private int firstFreeRow(int column) {
-        for (int i = ROWS - 1; i >= 0; i--)
-            if (this.board[i][column] == 0)
-                return i;
-
-        return -1;
     }
 }

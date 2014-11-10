@@ -2,6 +2,7 @@ package im.fuad.rit.copads.p3;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Game board model implementation.
@@ -66,10 +67,27 @@ class C4Board implements C4BoardIntf {
      * @see C4BoardIntf.hasWon();
      */
     public int[] hasWon() {
-        List<int[]> positions = new ArrayList<int[]>();
+        int[] result;
 
-        // check horizontally
+        result = hasWonHorizontally();
+
+        if (result != null) return result;
+
+        result = hasWonVertically();
+
+        if (result != null) return result;
+
+        result = hasWonDiagonally();
+
+        if (result != null) return result;
+
+        return null;
+    }
+
+    private int[] hasWonHorizontally() {
         for (int i = 0; i < ROWS; i++) {
+            List<int[]> positions = new ArrayList<int[]>();
+
             for (int j = 0; j < COLS - 1; j++) {
                 int thisCell = this.board[i][j];
                 int nextCell = this.board[i][j + 1];
@@ -80,15 +98,24 @@ class C4Board implements C4BoardIntf {
                     positions.clear();
 
                 if (positions.size() == 3) {
-                    return new int[] {
+                    int[] result = new int[] {
                         positions.get(0)[0], positions.get(0)[1], i, j + 1
                     };
+
+                    System.out.println("HORIZONTAL: " + Arrays.toString(result));
+
+                    return result;
                 }
             }
         }
 
-        // check vertically
+        return null;
+    }
+
+    private int[] hasWonVertically() {
         for (int j = 0; j < COLS; j++) {
+            List<int[]> positions = new ArrayList<int[]>();
+
             for (int i = 0; i < ROWS - 1; i++) {
                 int thisCell = this.board[i][j];
                 int nextCell = this.board[i + 1][j];
@@ -99,18 +126,27 @@ class C4Board implements C4BoardIntf {
                     positions.clear();
 
                 if (positions.size() == 3) {
-                    return new int[] {
+                    int[] result =  new int[] {
                         positions.get(0)[0], positions.get(0)[1], i + 1, j
                     };
+
+                    System.out.println("VERTICAL: " + Arrays.toString(result));
+
+                    return result;
                 }
             }
         }
 
-        // check diagonally
+        return null;
+    }
+
+    private int[] hasWonDiagonally() {
         // My algorithm for generating the diagonal indices was problematic and I couldn't find an
         // acceptable solution so the diagonal indices were hardcoded on the DIAGONALS constant. The
         // current solution works for a board of 6 rows and 7 columns only.
         for (int[][] diagonal : DIAGONALS) {
+            List<int[]> positions = new ArrayList<int[]>();
+
             for (int coord = 0; coord < diagonal.length - 1; coord++) {
                 int thisI = diagonal[coord][0], thisJ = diagonal[coord][1];
                 int nextI = diagonal[coord + 1][0], nextJ = diagonal[coord + 1][1];
@@ -124,9 +160,13 @@ class C4Board implements C4BoardIntf {
                     positions.clear();
 
                 if (positions.size() == 3) {
-                    return new int[] {
+                    int[] result = new int[] {
                         positions.get(0)[0], positions.get(0)[1], nextI, nextJ
                     };
+
+                    System.out.println("DIAGONAL: " + Arrays.toString(result));
+
+                    return result;
                 }
             }
         }

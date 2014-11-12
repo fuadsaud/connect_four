@@ -43,6 +43,12 @@ class MessageReceiver {
         }
     }
 
+    /**
+     * Interprets a command received from the game server and fires the correspondent method on
+     * this object.
+     *
+     * @param commandParts a list with each piece of the command as an element.
+     */
     private void processCommand(List<String> commandParts) {
         String commandName = commandParts.get(0);
 
@@ -53,6 +59,12 @@ class MessageReceiver {
         else if (commandName.equals("clear"))  clear(commandParts);
     }
 
+    /**
+     * Interprets a command received from the game server and fires the correspondent method on
+     * this object.
+     *
+     * @param commandParts a list with each piece of the command as an element.
+     */
     private void number(List<String> commandParts) {
         this.listener.number(Integer.valueOf(commandParts.get(1)));
     }

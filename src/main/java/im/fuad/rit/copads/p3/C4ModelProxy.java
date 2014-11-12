@@ -68,10 +68,20 @@ class C4ModelProxy implements C4ViewListener {
         this.modelListener = listener;
     }
 
+    /**
+     * Returns the player object for the given player number.
+     *
+     * @param playerNumber the player number.
+     *
+     * @return the Player object for the given player numer.
+     */
     private Player playerForNumber(Integer playerNumber) {
         return playerNumber == this.myNumber ? this.me : this.opponent;
     }
 
+    /**
+     * Signals this client to terminate.
+     */
     private void terminate() { C4Client.terminate(); }
 
     /**

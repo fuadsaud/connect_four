@@ -51,6 +51,11 @@ class MessageDispatcher {
         sendMessage("clear");
     }
 
+    /**
+     * Writes a string to the socket.
+     *
+     * @param message the message to be written to the socket.
+     */
     private void sendMessage(String message) throws IOException {
         this.writer.write(message);
         this.writer.newLine();

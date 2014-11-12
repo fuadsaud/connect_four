@@ -84,6 +84,14 @@ class C4Board implements C4BoardIntf {
         return null;
     }
 
+    /**
+     * Determines whether either player has won the game with an horizontal sequence of markers.
+     * If so, an array of four integers (r1, c1, r2, c2) is returned, where (r1, c1) is the
+     * row/column of the first of the four markers and (r2, c2) is the row/column of the last of
+     * the four markers. If neither player has won horizontally, null is returned.
+     *
+     * @return an int array of (r1, c1, r2, c2) or null.
+     */
     private int[] hasWonHorizontally() {
         for (int i = 0; i < ROWS; i++) {
             List<int[]> positions = new ArrayList<int[]>();
@@ -112,6 +120,14 @@ class C4Board implements C4BoardIntf {
         return null;
     }
 
+    /**
+     * Determines whether either player has won the game with a vertical sequence of markers.
+     * If so, an array of four integers (r1, c1, r2, c2) is returned, where (r1, c1) is the
+     * row/column of the first of the four markers and (r2, c2) is the row/column of the last of
+     * the four markers. If neither player has won vertically, null is returned.
+     *
+     * @return an int array of (r1, c1, r2, c2) or null.
+     */
     private int[] hasWonVertically() {
         for (int j = 0; j < COLS; j++) {
             List<int[]> positions = new ArrayList<int[]>();
@@ -140,6 +156,14 @@ class C4Board implements C4BoardIntf {
         return null;
     }
 
+    /**
+     * Determines whether either player has won the game with a diagonal sequence of markers.
+     * If so, an array of four integers (r1, c1, r2, c2) is returned, where (r1, c1) is the
+     * row/column of the first of the four markers and (r2, c2) is the row/column of the last of
+     * the four markers. If neither player has won diagonally, null is returned.
+     *
+     * @return an int array of (r1, c1, r2, c2) or null.
+     */
     private int[] hasWonDiagonally() {
         // My algorithm for generating the diagonal indices was problematic and I couldn't find an
         // acceptable solution so the diagonal indices were hardcoded on the DIAGONALS constant. The

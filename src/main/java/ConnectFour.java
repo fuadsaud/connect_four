@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 
-import im.fuad.rit.copads.p3.C4Client;
+import im.fuad.rit.copads.p4.C4Client;
 
 /**
  * Main class for the client program. Handles command line arguments doing necessary conversions

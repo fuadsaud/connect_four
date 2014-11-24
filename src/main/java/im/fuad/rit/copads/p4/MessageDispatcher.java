@@ -40,8 +40,8 @@ class MessageDispatcher {
         DataOutputStream dos = new DataOutputStream(baos);
 
         dos.writeChar('A');
-        dos.writeByte(player);
-        dos.writeByte(column);
+        dos.writeInt(player);
+        dos.writeInt(column);
 
         dos.close();
 

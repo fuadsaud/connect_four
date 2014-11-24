@@ -35,10 +35,10 @@ public class C4ViewProxy implements C4ModelListener {
 
         switch(command) {
             case 'A':
-                Byte playerNumber = in.readByte();
-                Byte column = in.readByte();
+                Integer playerNumber = in.readInt();
+                Integer column = in.readInt();
 
-                // this.viewListener.addMarker(colum);
+                this.viewListener.addMarker(column);
 
                 System.out.println(String.format("%c %d %d", command, playerNumber, column));
 

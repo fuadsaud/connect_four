@@ -18,13 +18,10 @@ public class C4ViewProxy implements C4ModelListener {
     private DatagramSocket socket;
     private SocketAddress clientAddress;
     private C4ViewListener viewListener;
-    private SessionManager sessionManager;
 
-    public C4ViewProxy(DatagramSocket socket, SocketAddress clientAddress,
-            SessionManager sessionManager) {
+    public C4ViewProxy(DatagramSocket socket, SocketAddress clientAddress) {
         this.socket = socket;
         this.clientAddress = clientAddress;
-        this.sessionManager = sessionManager;
     }
 
     public Boolean process(DatagramPacket packet) throws IOException {
@@ -41,7 +38,7 @@ public class C4ViewProxy implements C4ModelListener {
                 Byte playerNumber = in.readByte();
                 Byte column = in.readByte();
 
-                // this.viewListener.addMarker(column);
+                // this.viewListener.addMarker(colum);
 
                 System.out.println(String.format("%c %d %d", command, playerNumber, column));
 
@@ -49,9 +46,7 @@ public class C4ViewProxy implements C4ModelListener {
             case 'J':
                 String playerName = in.readUTF();
 
-                this.viewListener = this.sessionManager.joinSession(this);
-
-                this.viewListener.join(this, playerName);
+                this.viewListener.join(C4ViewProxy.this, playerName);
 
                 System.out.println(String.format("%c %s", command, playerName));
 
@@ -150,6 +145,10 @@ public class C4ViewProxy implements C4ModelListener {
         dos.close();
 
         sendMessage(baos.toByteArray());
+    }
+
+    public void setViewListener(C4ViewListener listener) {
+        this.viewListener = listener;
     }
 
     private void sendMessage(byte[] payload) throws IOException {

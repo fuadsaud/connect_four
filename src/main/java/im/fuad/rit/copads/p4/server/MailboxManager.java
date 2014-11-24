@@ -31,7 +31,9 @@ public class MailboxManager {
         C4ViewProxy proxy = proxies.get(clientAddress);
 
         if (proxy == null) {
-            proxy = new C4ViewProxy(socket, clientAddress, this.sessionManager);
+            proxy = new C4ViewProxy(socket, clientAddress);
+
+            proxy.setViewListener(sessionManager);
 
             proxies.put(clientAddress, proxy);
         }

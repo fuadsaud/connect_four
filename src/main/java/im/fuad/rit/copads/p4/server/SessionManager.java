@@ -45,7 +45,7 @@ class SessionManager implements C4ViewListener {
     /**
      * @see C4ViewListener.addMarker()
      */
-    public void addMarker(Integer column) throws IOException { }
+    public void addMarker(Integer playerNumber, Integer column) throws IOException { }
 
     /**
      * @see C4ViewListener.clear()

@@ -39,7 +39,7 @@ class MessageReceiver {
     public void listen() throws IOException {
         byte[] payload = new byte[128];
 
-        while(true) {
+        while (true) {
             DatagramPacket packet = new DatagramPacket(payload, payload.length);
 
             socket.receive(packet);
@@ -49,7 +49,7 @@ class MessageReceiver {
 
             Character command = in.readChar();
 
-            switch(command) {
+            switch (command) {
                 case '#':
                     this.listener.number(in.readInt());
 

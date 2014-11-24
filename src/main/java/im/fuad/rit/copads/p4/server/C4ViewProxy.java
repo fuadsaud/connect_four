@@ -32,12 +32,12 @@ public class C4ViewProxy implements C4ModelListener {
 
         System.out.println(String.format("COMMAND: %s", command));
 
-        switch(command) {
+        switch (command) {
             case 'A':
                 Integer playerNumber = in.readInt();
                 Integer column = in.readInt();
 
-                this.viewListener.addMarker(column);
+                this.viewListener.addMarker(playerNumber, column);
 
                 System.out.println(String.format("%c %d %d", command, playerNumber, column));
 

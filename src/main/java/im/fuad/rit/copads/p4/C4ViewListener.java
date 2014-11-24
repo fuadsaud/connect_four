@@ -15,7 +15,7 @@ public interface C4ViewListener {
      *
      * @param column the column in which the marker is to be added.
      */
-    public void addMarker(Integer col) throws IOException;
+    public void addMarker(Integer playerNumber, Integer column) throws IOException;
 
     /**
      * Informs the model to clear tha game board.

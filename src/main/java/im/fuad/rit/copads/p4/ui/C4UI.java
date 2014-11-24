@@ -92,7 +92,7 @@ public class C4UI implements C4ModelListener {
             public void mouseClicked(MouseEvent e) {
                 int c = boardPanel.clickToColumn(e);
 
-                addMarker(c);
+                addMarker(myNumber, c);
             }
         });
 
@@ -153,9 +153,9 @@ public class C4UI implements C4ModelListener {
         this.viewListener = listener;
     }
 
-    private void addMarker(Integer column) {
+    private void addMarker(Integer playerNumber, Integer column) {
         try {
-            this.viewListener.addMarker(column);
+            this.viewListener.addMarker(playerNumber, column);
         } catch(IOException e) {
             terminate();
         }

@@ -20,6 +20,10 @@ public class C4Board implements C4BoardIntf {
      */
     public C4Board() { clear(); }
 
+    public void play(int player, int col) {
+        play(player, rowForColumn(col), col);
+    }
+
     /**
      * Adds a marker to the board.
      *
@@ -196,5 +200,14 @@ public class C4Board implements C4BoardIntf {
         }
 
         return null;
+    }
+
+    private int rowForColumn(int col) {
+        for (int i = 0; i <= ROWS; i++) {
+            if (this.board[i][col] == 0)
+                return i;
+        }
+
+        return -1;
     }
 }

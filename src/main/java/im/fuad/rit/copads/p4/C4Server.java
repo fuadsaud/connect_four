@@ -31,7 +31,7 @@ public class C4Server {
 
             MailboxManager manager = new MailboxManager(socket);
 
-            while(true) {
+            while (true) {
                 manager.receiveMessage();
             }
         } catch(IOException e) {

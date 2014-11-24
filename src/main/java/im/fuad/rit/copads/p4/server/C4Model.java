@@ -29,8 +29,6 @@ class C4Model implements C4ViewListener {
 
                 this.player1.number(1);
                 this.player1.name(1, this.player1Name);
-
-                System.out.println("PLAYER 1 JOINING" + playerName);
             } else if (this.player2 == null) {
                 this.player2 = listener;
                 this.player2Name = playerName;
@@ -44,8 +42,6 @@ class C4Model implements C4ViewListener {
                 this.player2.name(1, this.player1Name);
                 this.player2.name(2, this.player2Name);
                 this.player2.turn(this.turn);
-
-                System.out.println("PLAYER 2 JOINING" + playerName);
             }
         // } catch(IOException e) {
         } catch(Exception e) {
@@ -56,7 +52,8 @@ class C4Model implements C4ViewListener {
     /**
      * @see C4ViewListener.addMarker()
      */
-    public void addMarker(Integer column) throws IOException {
+    public void addMarker(Integer playerNumber, Integer column) throws IOException {
+        this.board.play(playerNumber, column);
     }
 
     /**

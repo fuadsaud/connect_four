@@ -51,6 +51,8 @@ public class C4ViewProxy implements C4ModelListener {
 
                 break;
             case 'C':
+                this.viewListener.clear();
+
                 System.out.println(command);
 
                 break;

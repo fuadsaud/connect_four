@@ -43,8 +43,7 @@ class C4Model implements C4ViewListener {
                 this.player2.name(2, this.player2Name);
                 this.player2.turn(this.turn);
             }
-        // } catch(IOException e) {
-        } catch(Exception e) {
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
@@ -87,10 +86,9 @@ class C4Model implements C4ViewListener {
 
             this.player1.turn(this.turn);
             this.player2.turn(this.turn);
-            // } catch(IOException e) {
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void terminate() { this.terminated = true; }

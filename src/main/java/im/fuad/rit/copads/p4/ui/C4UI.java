@@ -19,7 +19,6 @@ import im.fuad.rit.copads.p4.C4Client;
 import im.fuad.rit.copads.p4.C4BoardIntf;
 import im.fuad.rit.copads.p4.C4ViewListener;
 import im.fuad.rit.copads.p4.C4ModelListener;
-import im.fuad.rit.copads.p4.Player;
 
 /**
  * Class C4UI provides the user interface for the network game of Connect Four.
@@ -38,6 +37,10 @@ public class C4UI implements C4ModelListener {
     private JButton newGameButton;
 
     private C4ViewListener viewListener;
+
+    private Integer myNumber;
+    private String myName;
+    private String opponentsName;
 
     // Exported constructors.
 
@@ -107,15 +110,35 @@ public class C4UI implements C4ModelListener {
             this.frame.setVisible(true);
     }
 
-    public void number(Integer playerNumber) { }
-    public void name(Integer playerNumber, String playerName) { }
-    public void turn(Integer playerNumber) { }
+    public void number(Integer playerNumber) {
+        this.myNumber = playerNumber;
+    }
+
+    public void name(Integer playerNumber, String playerName) {
+        if (this.myNumber == playerNumber) {
+            this.myName = playerName;
+        } else {
+            this.opponentsName = playerName;
+            newGameButton.setEnabled(true);
+            repaint();
+        }
+    }
+
+    public void turn(Integer playerNumber) {
+        if (playerNumber == 0)
+            setMessage("Game over");
+        else if (this.myNumber == playerNumber)
+            setMessage("Your turn");
+        else
+            setMessage(this.opponentsName + "'s turn");
+    }
+
     public void add(Integer player, Integer row, Integer col) { }
 
     /**
      * @see C4ModelListener.markerAdded()
      */
-    public void markerAdded(Player player, Integer row,  Integer col) { repaint(); }
+    public void markerAdded(Integer playerNumber, Integer row,  Integer col) { repaint(); }
 
     /**
      * @see C4ModelListener.cleared()
@@ -125,22 +148,12 @@ public class C4UI implements C4ModelListener {
     /**
      * @see C4ModelListener.gameStarted()
      */
-    public void gameStarted() { newGameButton.setEnabled(true); repaint(); }
+    public void gameStarted() {}
 
     /**
      * @see C4ModelListener.gameOver()
      */
-    public void gameOver() { setMessage("Game over"); }
-
-    /**
-     * @see C4ModelListener.turn()
-     */
-    public void turn(Player player) {
-        if (player.isMe())
-            setMessage("Your turn");
-        else
-            setMessage(player.getName() + "'s turn");
-    }
+    public void gameOver() {  }
 
     /**
      * Sets this object's view listener.

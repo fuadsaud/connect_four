@@ -22,15 +22,14 @@ class C4ModelClone implements C4ModelListener {
 
     public void number(Integer playerNumber) { }
     public void name(Integer playerNumber, String playerName) { }
-    public void turn(Integer playerNumber) { }
     public void add(Integer player, Integer row, Integer col) { }
 
     /**
      * @see C4ModelListener.markerAdded()
      */
-    public void markerAdded(Player player, Integer row, Integer col) throws IOException {
-        this.board.play(player.getNumber(), row, col);
-        this.modelListener.markerAdded(player, row, col);
+    public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException {
+        this.board.play(playerNumber, row, col);
+        this.modelListener.markerAdded(playerNumber, row, col);
     }
 
     /**
@@ -55,7 +54,9 @@ class C4ModelClone implements C4ModelListener {
     /**
      * @see C4ModelListener.turn()
      */
-    public void turn(Player player) throws IOException { this.modelListener.turn(player); }
+    public void turn(Integer playerNumber) throws IOException {
+        this.modelListener.turn(playerNumber);
+    }
 
     public void clear() {}
 

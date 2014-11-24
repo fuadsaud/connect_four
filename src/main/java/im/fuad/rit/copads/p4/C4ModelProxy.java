@@ -16,9 +16,8 @@ import im.fuad.rit.copads.p4.server.C4ViewProxy;
 class C4ModelProxy implements C4ViewListener {
     private DatagramSocket socket;
     private C4ModelListener modelListener;
-    private Player me;
-    private Player opponent;
     private Integer myNumber;
+    private String myName;
     private MessageDispatcher dispatcher;
 
     /**
@@ -49,7 +48,7 @@ class C4ModelProxy implements C4ViewListener {
      * Informs the model that this player is joining the game session with the given name.
      */
     public void join(C4ModelListener modelListener, String playerName) throws IOException {
-        if (this.me == null) {
+        if (this.myNumber == null) {
             this.dispatcher.sendJoinMessage(playerName);
 
             new Thread(new ServerReader()).start();
@@ -61,7 +60,7 @@ class C4ModelProxy implements C4ViewListener {
      *
      * @return this player's number.
      */
-    public Integer getPlayerNumber() { return this.myNumber; }
+    public Integer getMyNumber() { return this.myNumber; }
 
     /**
      * Sets this object's model listener.
@@ -70,17 +69,6 @@ class C4ModelProxy implements C4ViewListener {
      */
     public void setModelListener(C4ModelListener listener) {
         this.modelListener = listener;
-    }
-
-    /**
-     * Returns the player object for the given player number.
-     *
-     * @param playerNumber the player number.
-     *
-     * @return the Player object for the given player numer.
-     */
-    private Player playerForNumber(Integer playerNumber) {
-        return playerNumber == this.myNumber ? this.me : this.opponent;
     }
 
     /**
@@ -116,11 +104,9 @@ class C4ModelProxy implements C4ViewListener {
          */
         public void name(Integer playerNumber, String playerName) throws IOException {
             if (playerNumber == myNumber) {
-                me = new Player(playerNumber, playerName, true);
+                myName = playerName;
             } else {
-                opponent = new Player(playerNumber, playerName, false);
-
-                modelListener.gameStarted();
+                modelListener.name(playerNumber, playerName);
             }
         }
 
@@ -131,14 +117,14 @@ class C4ModelProxy implements C4ViewListener {
             if (playerNumber == 0)
                 modelListener.gameOver();
             else
-                modelListener.turn(playerForNumber(playerNumber));
+                modelListener.turn(playerNumber);
         }
 
         /**
          * @see C4ServerListener.add()
          */
         public void add(Integer playerNumber, Integer row, Integer col) throws IOException {
-            modelListener.markerAdded(playerForNumber(playerNumber), row, col);
+            modelListener.markerAdded(playerNumber, row, col);
         }
 
         /**

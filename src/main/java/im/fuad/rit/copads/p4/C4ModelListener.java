@@ -11,11 +11,11 @@ public interface C4ModelListener extends C4ServerListener {
     /**
      * Hook to be called when a marker is added to the board.
      *
-     * @param player the player who's making the move.
+     * @param playerNumber the number of the player who's making the move.
      * @param row the row in which the marker is being added.
      * @param col the column in which the marker is being added.
      */
-    public void markerAdded(Player player, Integer row, Integer col) throws IOException;
+    public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException;
 
     /**
      * Hook to be called when the board is cleared.
@@ -35,8 +35,8 @@ public interface C4ModelListener extends C4ServerListener {
     /**
      * Hook to be called when the a new turn starts.
      *
-     * @param player the player to which this new turn belongs.
+     * @param player the number of the player to which this new turn belongs.
      */
-    public void turn(Player player) throws IOException;
+    public void turn(Integer playerNumber) throws IOException;
 }
 

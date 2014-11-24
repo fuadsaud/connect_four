@@ -12,7 +12,6 @@ import java.io.IOException;
 
 import im.fuad.rit.copads.p4.C4ModelListener;
 import im.fuad.rit.copads.p4.C4ViewListener;
-import im.fuad.rit.copads.p4.Player;
 
 public class C4ViewProxy implements C4ModelListener {
     private DatagramSocket socket;
@@ -63,7 +62,7 @@ public class C4ViewProxy implements C4ModelListener {
     /**
      * @see C4ModelListener.markerAdded()
      */
-    public void markerAdded(Player player, Integer row, Integer col) throws IOException { }
+    public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException { }
 
     /**
      * @see C4ModelListener.cleared()
@@ -79,11 +78,6 @@ public class C4ViewProxy implements C4ModelListener {
      * @see C4ModelListener.gameOver()
      */
     public void gameOver() throws IOException {}
-
-    /**
-     * @see C4ModelListener.turn()
-     */
-    public void turn(Player player) throws IOException { }
 
     public void number(Integer playerNumber) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

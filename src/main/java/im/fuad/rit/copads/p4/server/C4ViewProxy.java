@@ -62,12 +62,33 @@ public class C4ViewProxy implements C4ModelListener {
     /**
      * @see C4ModelListener.markerAdded()
      */
-    public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException { }
+    public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('A');
+        dos.writeInt(playerNumber);
+        dos.writeInt(row);
+        dos.writeInt(col);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
 
     /**
      * @see C4ModelListener.cleared()
      */
-    public void cleared() throws IOException { }
+    public void cleared() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('C');
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
 
     public void number(Integer playerNumber) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -100,31 +121,6 @@ public class C4ViewProxy implements C4ModelListener {
 
         dos.writeChar('T');
         dos.writeInt(playerNumber);
-
-        dos.close();
-
-        sendMessage(baos.toByteArray());
-    }
-
-    public void add(Integer playerNumber, Integer row, Integer col) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-
-        dos.writeChar('A');
-        dos.writeInt(playerNumber);
-        dos.writeInt(row);
-        dos.writeInt(col);
-
-        dos.close();
-
-        sendMessage(baos.toByteArray());
-    }
-
-    public void clear() throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-
-        dos.writeChar('C');
 
         dos.close();
 

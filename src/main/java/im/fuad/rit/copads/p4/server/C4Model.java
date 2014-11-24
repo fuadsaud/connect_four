@@ -53,7 +53,24 @@ class C4Model implements C4ViewListener {
      * @see C4ViewListener.addMarker()
      */
     public void addMarker(Integer playerNumber, Integer column) throws IOException {
-        this.board.play(playerNumber, column);
+        if (this.turn == playerNumber) {
+            int[] coords = this.board.play(playerNumber, column);
+
+            if (coords[0] != -1 && coords[1] != -1) {
+                if (this.board.hasWon() != null)
+                    this.turn = 0;
+                else if (this.turn == 1)
+                    this.turn = 2;
+                else
+                    this.turn = 1;
+
+                this.player1.markerAdded(playerNumber, coords[0], coords[1]);
+                this.player2.markerAdded(playerNumber, coords[0], coords[1]);
+
+                this.player1.turn(this.turn);
+                this.player2.turn(this.turn);
+            }
+        }
     }
 
     /**
@@ -63,17 +80,17 @@ class C4Model implements C4ViewListener {
         try {
             this.board.clear();
 
-            this.turn = 1;
-
             this.player1.cleared();
             this.player2.cleared();
 
+            this.turn = 1;
+
             this.player1.turn(this.turn);
             this.player2.turn(this.turn);
-        // } catch(IOException e) {
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+            // } catch(IOException e) {
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
     }
 
     public void terminate() { this.terminated = true; }

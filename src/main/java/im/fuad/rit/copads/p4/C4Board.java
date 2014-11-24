@@ -20,8 +20,8 @@ public class C4Board implements C4BoardIntf {
      */
     public C4Board() { clear(); }
 
-    public void play(int player, int col) {
-        play(player, rowForColumn(col), col);
+    public int[] play(int player, int col) {
+        return play(player, rowForColumn(col), col);
     }
 
     /**
@@ -31,7 +31,7 @@ public class C4Board implements C4BoardIntf {
      * @param row the row in which the marker should be added.
      * @param col the column in which the marker should be added.
      */
-    public void play(int player, int row, int col) {
+    public int[] play(int player, int row, int col) {
         if (player != 1 && player != 2)
             throw new IllegalArgumentException("Player must be 1 or 2");
 
@@ -42,6 +42,8 @@ public class C4Board implements C4BoardIntf {
             throw new IllegalArgumentException("Row must be between 0 and 5");
 
         this.board[row][col] = player;
+
+        return new int[] { row, col };
     }
 
     /**
@@ -114,8 +116,6 @@ public class C4Board implements C4BoardIntf {
                         positions.get(0)[0], positions.get(0)[1], i, j + 1
                     };
 
-                    System.out.println("HORIZONTAL: " + Arrays.toString(result));
-
                     return result;
                 }
             }
@@ -149,8 +149,6 @@ public class C4Board implements C4BoardIntf {
                     int[] result =  new int[] {
                         positions.get(0)[0], positions.get(0)[1], i + 1, j
                     };
-
-                    System.out.println("VERTICAL: " + Arrays.toString(result));
 
                     return result;
                 }
@@ -192,8 +190,6 @@ public class C4Board implements C4BoardIntf {
                         positions.get(0)[0], positions.get(0)[1], nextI, nextJ
                     };
 
-                    System.out.println("DIAGONAL: " + Arrays.toString(result));
-
                     return result;
                 }
             }
@@ -203,10 +199,9 @@ public class C4Board implements C4BoardIntf {
     }
 
     private int rowForColumn(int col) {
-        for (int i = 0; i <= ROWS; i++) {
+        for (int i = ROWS - 1; i >= 0; i--)
             if (this.board[i][col] == 0)
                 return i;
-        }
 
         return -1;
     }

@@ -1,14 +1,13 @@
-JAVAC       = javac
-SOURCES     = $(wildcard  src/main/java/**/**.java)
-SRCDIR      = src/main/java
-OUTDIR      = bin/
-CLIENT_MAINCLASS   = ConnectFour
-SERVER_MAINCLASS   = ConnectFourServer
-MAINFILE    = $(SRCDIR)/$(CLIENT_MAINCLASS).java $(SRCDIR)/$(SERVER_MAINCLASS).java
-HOST        = localhost
-PORT        = 5678
-PLAYER1NAME = Fuad
-PLAYER2NAME = Brenda
+JAVAC            = javac
+SRCDIR           = src/main/java
+SOURCES          = $(shell find $(SRCDIR) -type f -iname *.java)
+OUTDIR           = bin/
+CLIENT_MAINCLASS = ConnectFour
+SERVER_MAINCLASS = ConnectFourServer
+HOST             = localhost
+PORT             = 5678
+PLAYER1NAME      = Fuad
+PLAYER2NAME      = Brenda
 
 server: classes
 	cd bin; java $(SERVER_MAINCLASS) $(HOST) $(PORT)
@@ -17,7 +16,7 @@ client1: classes
 client2: classes
 	cd bin; java $(CLIENT_MAINCLASS) $(HOST) $(PORT) $(PLAYER2NAME)
 classes: clean outdir
-	$(JAVAC) -d $(OUTDIR) -sourcepath $(SRCDIR) -Xlint $(MAINFILE)
+	$(JAVAC) -d $(OUTDIR) $(SOURCES)
 outdir:
 	mkdir $(OUTDIR)
 clean:

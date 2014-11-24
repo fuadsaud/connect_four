@@ -1,7 +1,9 @@
 package im.fuad.rit.copads.p4;
 
 import java.io.IOException;
-import java.net.Socket;
+
+import java.net.DatagramSocket;
+import java.net.SocketAddress;
 
 /**
  * Provides the network proxy for the model object in the server. It listen to events fired on the
@@ -10,7 +12,7 @@ import java.net.Socket;
  * @author Fuad Saud <ffs3415@rit.edu>
  */
 class C4ModelProxy implements C4ViewListener {
-    private Socket socket;
+    private DatagramSocket socket;
     private C4ModelListener modelListener;
     private Player me;
     private Player opponent;
@@ -22,9 +24,9 @@ class C4ModelProxy implements C4ViewListener {
      *
      * @param socket the socket used to communicate with the server.
      */
-    public C4ModelProxy(Socket socket) throws IOException {
+    public C4ModelProxy(DatagramSocket socket, SocketAddress serverAddress) throws IOException {
         this.socket = socket;
-        this.dispatcher = new MessageDispatcher(socket);
+        this.dispatcher = new MessageDispatcher(socket, serverAddress);
     }
 
     /**
@@ -48,7 +50,7 @@ class C4ModelProxy implements C4ViewListener {
         if (this.me == null) {
             this.dispatcher.sendJoinMessage(playerName);
 
-            new Thread(new ServerReader()).start();
+            // new Thread(new ServerReader()).start();
         }
     }
 
@@ -90,57 +92,57 @@ class C4ModelProxy implements C4ViewListener {
      *
      * @author Fuad Saud <ffs3415@rit.edu>
      */
-    private class ServerReader implements Runnable, C4ServerListener {
-        public void run() {
-            try { new MessageReceiver(socket, this).listen(); }
-            catch(IOException e) { }
-            finally {
-                try { socket.close(); }
-                catch (IOException e) {}
-                finally { terminate(); }
-            }
-        }
+    // private class ServerReader implements Runnable, C4ServerListener {
+    //     public void run() {
+    //         try { new MessageReceiver(socket, this).listen(); }
+    //         catch(IOException e) { }
+    //         finally {
+    //             try { socket.close(); }
+    //             catch (IOException e) {}
+    //             finally { terminate(); }
+    //         }
+    //     }
 
-        /**
-         * @see C4ServerListener.number()
-         */
-        public void number(Integer playerNumber) {
-            myNumber = playerNumber;
-        }
+    //     /**
+    //      * @see C4ServerListener.number()
+    //      */
+    //     public void number(Integer playerNumber) {
+    //         myNumber = playerNumber;
+    //     }
 
-        /**
-         * @see C4ServerListener.name()
-         */
-        public void name(Integer playerNumber, String playerName) {
-            if (playerNumber == myNumber) {
-                me = new Player(playerNumber, playerName, true);
-            } else {
-                opponent = new Player(playerNumber, playerName, false);
+    //     /**
+    //      * @see C4ServerListener.name()
+    //      */
+    //     public void name(Integer playerNumber, String playerName) {
+    //         if (playerNumber == myNumber) {
+    //             me = new Player(playerNumber, playerName, true);
+    //         } else {
+    //             opponent = new Player(playerNumber, playerName, false);
 
-                modelListener.gameStarted();
-            }
-        }
+    //             modelListener.gameStarted();
+    //         }
+    //     }
 
-        /**
-         * @see C4ServerListener.turn()
-         */
-        public void turn(Integer playerNumber) {
-            if (playerNumber == 0)
-                modelListener.gameOver();
-            else
-                modelListener.turn(playerForNumber(playerNumber));
-        }
+    //     /**
+    //      * @see C4ServerListener.turn()
+    //      */
+    //     public void turn(Integer playerNumber) {
+    //         if (playerNumber == 0)
+    //             modelListener.gameOver();
+    //         else
+    //             modelListener.turn(playerForNumber(playerNumber));
+    //     }
 
-        /**
-         * @see C4ServerListener.add()
-         */
-        public void add(Integer playerNumber, Integer row, Integer col) {
-            modelListener.markerAdded(playerForNumber(playerNumber), row, col);
-        }
+    //     /**
+    //      * @see C4ServerListener.add()
+    //      */
+    //     public void add(Integer playerNumber, Integer row, Integer col) {
+    //         modelListener.markerAdded(playerForNumber(playerNumber), row, col);
+    //     }
 
-        /**
-         * @see C4ServerListener.clear()
-         */
-        public void clear() { modelListener.cleared(); }
-    }
+    //     /**
+    //      * @see C4ServerListener.clear()
+    //      */
+    //     public void clear() { modelListener.cleared(); }
+    // }
 }

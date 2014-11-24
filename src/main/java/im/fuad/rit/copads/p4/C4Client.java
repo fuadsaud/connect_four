@@ -1,9 +1,10 @@
 package im.fuad.rit.copads.p4;
 
-import java.net.Socket;
+import java.io.IOException;
+
+import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.io.IOException;
 
 import im.fuad.rit.copads.p4.ui.C4UI;
 
@@ -36,7 +37,7 @@ public class C4Client {
      * @param port the game server port.
      * @param playerName this client's player name.
      */
-    public C4Client(String host, Short port, String playerName) {
+    public C4Client(String host, Integer port, String playerName) {
         this.address = new InetSocketAddress(host, port);
         this.playerName = playerName;
     }
@@ -47,13 +48,11 @@ public class C4Client {
      */
     public void call() {
         try {
-            Socket socket = new Socket();
-
-            socket.connect(this.address);
+            DatagramSocket socket = new DatagramSocket();
 
             C4Board board = new C4Board();
             C4ModelClone modelClone = new C4ModelClone(board);
-            C4ModelProxy modelProxy = new C4ModelProxy(socket);
+            C4ModelProxy modelProxy = new C4ModelProxy(socket, this.address);
             C4UI ui = new C4UI(board, this.playerName);
 
             modelClone.setModelListener(ui);

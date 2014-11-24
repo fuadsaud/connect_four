@@ -22,8 +22,9 @@ class C4ModelClone implements C4ModelListener {
      * @see C4ModelListener.markerAdded()
      */
     public void markerAdded(Player player, Integer row, Integer col) {
-        this.board.play(player.getNumber(), row, col); this.modelListener.markerAdded(player, row,
-                col); }
+        this.board.play(player.getNumber(), row, col);
+        this.modelListener.markerAdded(player, row, col);
+    }
 
     /**
      * @see C4ModelListener.cleared()

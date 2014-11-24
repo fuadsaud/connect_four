@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author Fuad Saud <ffs3415@rit.edu>
  */
-class C4Board implements C4BoardIntf {
+public class C4Board implements C4BoardIntf {
     private static final int PLAYER_1_MARK = 1;
     private static final int PLAYER_2_MARK = 2;
 

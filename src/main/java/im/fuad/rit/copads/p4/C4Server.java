@@ -1,7 +1,10 @@
 package im.fuad.rit.copads.p4;
 
+import java.io.IOException;
+
 import java.net.InetSocketAddress;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 
 import im.fuad.rit.copads.p4.server.MailboxManager;
 
@@ -14,7 +17,7 @@ public class C4Server {
      * @param host the game server host adress.
      * @param port the game server port.
      */
-    public C4Server(String host, Short port) {
+    public C4Server(String host, Integer port) {
         this.address = new InetSocketAddress(host, port);
     }
 
@@ -23,8 +26,16 @@ public class C4Server {
      * connections.
      */
     public void call() {
-        DatagramSocket socket = new DatagramSocket(this.address);
+        try {
+            DatagramSocket socket = new DatagramSocket(this.address);
 
-        MailboxManager manager = new MailboxManager(socket);
+            MailboxManager manager = new MailboxManager(socket);
+
+            while(true) {
+                manager.receiveMessage();
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,9 +1,12 @@
 package im.fuad.rit.copads.p4;
 
-import java.net.Socket;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+
+import java.net.DatagramSocket;
+import java.net.DatagramPacket;
+import java.net.SocketAddress;
 
 /**
  * This class offers methods to write commands that are part of this application communication
@@ -12,17 +15,18 @@ import java.io.IOException;
  * @author Fuad Saud <ffs3415@rit.edu>
  */
 class MessageDispatcher {
-    private BufferedWriter writer;
+    private DatagramSocket socket;
+    private SocketAddress serverAddress;
 
     /**
      * Initializes a dispatcher.
      *
      * @param socket the socket to be write commands to.
      */
-    public MessageDispatcher(Socket socket) throws IOException {
-        this.writer =
-            new BufferedWriter(
-                   new OutputStreamWriter(socket.getOutputStream()));
+    public MessageDispatcher(DatagramSocket socket, SocketAddress serverAddress)
+        throws IOException {
+        this.socket = socket;
+        this.serverAddress = serverAddress;
     }
 
     /**
@@ -32,7 +36,16 @@ class MessageDispatcher {
      * @param column the column selected to add the marker.
      */
     public void sendAddMarkerMessage(Integer player, Integer column) throws IOException {
-        sendMessage(String.format("add %d %d", player, column));
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('A');
+        dos.writeByte(player);
+        dos.writeByte(column);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
     }
 
     /**
@@ -41,24 +54,39 @@ class MessageDispatcher {
      * @param playerName the name of the player who's joining the session.
      */
     public void sendJoinMessage(String playerName) throws IOException {
-        sendMessage(String.format("join %s", playerName));
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('J');
+        dos.writeUTF(playerName);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
     }
 
     /**
      * Sends a 'clear' message to the game server.
      */
     public void sendClearMessage() throws IOException {
-        sendMessage("clear");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('C');
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+
     }
 
     /**
-     * Writes a string to the socket.
+     * Writes a byte array to the socket.
      *
      * @param message the message to be written to the socket.
      */
-    private void sendMessage(String message) throws IOException {
-        this.writer.write(message);
-        this.writer.newLine();
-        this.writer.flush();
+    private void sendMessage(byte[] payload) throws IOException {
+        this.socket.send(
+                new DatagramPacket(payload, payload.length, serverAddress));
     }
 }

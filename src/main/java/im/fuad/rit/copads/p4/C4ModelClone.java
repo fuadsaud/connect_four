@@ -20,9 +20,13 @@ class C4ModelClone implements C4ModelListener {
         this.board = board;
     }
 
-    public void number(Integer playerNumber) { }
-    public void name(Integer playerNumber, String playerName) { }
-    public void add(Integer player, Integer row, Integer col) { }
+    public void number(Integer playerNumber) throws IOException {
+        this.modelListener.number(playerNumber);
+    }
+
+    public void name(Integer playerNumber, String playerName) throws IOException {
+        this.modelListener.name(playerNumber, playerName);
+    }
 
     /**
      * @see C4ModelListener.markerAdded()

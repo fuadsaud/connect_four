@@ -51,63 +51,64 @@ public class C4UI implements C4ModelListener {
      * @param  name   Player's name.
      */
     public C4UI(C4BoardIntf board, String name) {
-            this.c4board = board;
+        this.myName = name;
+        this.c4board = board;
 
-            // Set up window.
-            this.frame = new JFrame ("Connect Four -- " + name);
+        // Set up window.
+        this.frame = new JFrame ("Connect Four -- " + name);
 
-            Container pane = this.frame.getContentPane();
-            JPanel p1 = new JPanel();
-            pane.add(p1);
+        Container pane = this.frame.getContentPane();
+        JPanel p1 = new JPanel();
+        pane.add(p1);
 
-            p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-            p1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        p1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            // Create and add widgets.
-            this.boardPanel = new C4Panel(this.c4board);
-            this.boardPanel.setAlignmentX(0.5f);
-            p1.add(this.boardPanel);
-            p1.add(Box.createVerticalStrut(10));
+        // Create and add widgets.
+        this.boardPanel = new C4Panel(this.c4board);
+        this.boardPanel.setAlignmentX(0.5f);
+        p1.add(this.boardPanel);
+        p1.add(Box.createVerticalStrut(10));
 
-            JPanel p2 = new JPanel();
-            p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-            p2.setAlignmentX(0.5f);
-            p1.add(p2);
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+        p2.setAlignmentX(0.5f);
+        p1.add(p2);
 
-            this.message = new JTextField(20);
-            this.message.setAlignmentY(0.5f);
-            this.message.setEditable(false);
-            this.message.setText("Waiting for partner");
-            p2.add(this.message);
-            p2.add(Box.createHorizontalStrut(10));
+        this.message = new JTextField(20);
+        this.message.setAlignmentY(0.5f);
+        this.message.setEditable(false);
+        this.message.setText("Waiting for partner");
+        p2.add(this.message);
+        p2.add(Box.createHorizontalStrut(10));
 
-            this.newGameButton = new JButton("New Game");
-            this.newGameButton.setAlignmentY(0.5f);
-            this.newGameButton.setEnabled(false);
-            p2.add(this.newGameButton);
+        this.newGameButton = new JButton("New Game");
+        this.newGameButton.setAlignmentY(0.5f);
+        this.newGameButton.setEnabled(false);
+        p2.add(this.newGameButton);
 
-            // Clicking the Connect Four panel informs the view listener.
-            this.boardPanel.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    int c = boardPanel.clickToColumn(e);
+        // Clicking the Connect Four panel informs the view listener.
+        this.boardPanel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int c = boardPanel.clickToColumn(e);
 
-                    addMarker(c);
-                }
-            });
+                addMarker(c);
+            }
+        });
 
-            // Clicking the New Game button informs the view listener.
-            this.newGameButton.addActionListener(new ActionListener() {
-                public void actionPerformed (ActionEvent e) {
-                    clear();
-                }
-            });
+        // Clicking the New Game button informs the view listener.
+        this.newGameButton.addActionListener(new ActionListener() {
+            public void actionPerformed (ActionEvent e) {
+                clear();
+            }
+        });
 
-            // Closing the window exits the client.
-            this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Closing the window exits the client.
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            // Display window.
-            this.frame.pack();
-            this.frame.setVisible(true);
+        // Display window.
+        this.frame.pack();
+        this.frame.setVisible(true);
     }
 
     public void number(Integer playerNumber) {
@@ -115,9 +116,7 @@ public class C4UI implements C4ModelListener {
     }
 
     public void name(Integer playerNumber, String playerName) {
-        if (this.myNumber == playerNumber) {
-            this.myName = playerName;
-        } else {
+        if (this.myNumber != playerNumber) {
             this.opponentsName = playerName;
             newGameButton.setEnabled(true);
             repaint();

@@ -97,17 +97,18 @@ class C4ModelProxy implements C4ViewListener {
          */
         public void number(Integer playerNumber) throws IOException {
             myNumber = playerNumber;
+
+            modelListener.number(playerNumber);
         }
 
         /**
          * @see C4ModelListener.name()
          */
         public void name(Integer playerNumber, String playerName) throws IOException {
-            if (playerNumber == myNumber) {
+            if (playerNumber == myNumber)
                 myName = playerName;
-            } else {
-                modelListener.name(playerNumber, playerName);
-            }
+
+            modelListener.name(playerNumber, playerName);
         }
 
         /**

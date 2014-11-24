@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketAddress;
 
+import im.fuad.rit.copads.p4.server.C4ViewProxy;
+
 /**
  * Provides the network proxy for the model object in the server. It listen to events fired on the
  * view and report these actions to the game server.
@@ -46,7 +48,7 @@ class C4ModelProxy implements C4ViewListener {
     /**
      * Informs the model that this player is joining the game session with the given name.
      */
-    public void join(String playerName) throws IOException {
+    public void join(C4ModelListener modelListener, String playerName) throws IOException {
         if (this.me == null) {
             this.dispatcher.sendJoinMessage(playerName);
 

@@ -107,6 +107,11 @@ public class C4UI implements C4ModelListener {
             this.frame.setVisible(true);
     }
 
+    public void number(Integer playerNumber) { }
+    public void name(Integer playerNumber, String playerName) { }
+    public void turn(Integer playerNumber) { }
+    public void add(Integer player, Integer row, Integer col) { }
+
     /**
      * @see C4ModelListener.markerAdded()
      */
@@ -154,7 +159,7 @@ public class C4UI implements C4ModelListener {
         }
     }
 
-    private void clear() {
+    public void clear() {
         try {
             this.viewListener.clear();
         } catch(IOException e) {

@@ -2,6 +2,8 @@ package im.fuad.rit.copads.p4;
 
 import java.io.IOException;
 
+import im.fuad.rit.copads.p4.server.C4ViewProxy;
+
 /**
  * Defines the operations necessary for objects that want to listen to view events.
  *
@@ -19,4 +21,6 @@ public interface C4ViewListener {
      * Informs the model to clear tha game board.
      */
     public void clear() throws IOException;
+
+    public void join(C4ModelListener listener, String playerName) throws IOException;
 }

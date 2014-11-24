@@ -5,24 +5,25 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import im.fuad.rit.copads.p4.C4ViewListener;
+import im.fuad.rit.copads.p4.C4ModelListener;
 import im.fuad.rit.copads.p4.C4Board;
 
 class SessionManager implements C4ViewListener {
-    private HashMap<Integer, C4Model> sessions;
+    private HashMap<String, C4Model> sessions;
 
     public SessionManager() {
-        this.sessions = new HashMap<Integer, C4Model>();
+        this.sessions = new HashMap<String, C4Model>();
     }
 
-    public void join(C4ViewProxy proxy, Integer sessionNumber) {
-        C4Model model = sessions.get(sessionNumber);
+    public void join(C4ModelListener listener, String playerName) {
+        C4Model model = sessions.get(playerName);
 
         if (model == null) {
             model = new C4Model();
-            sessions.put(sessionNumber, model);
+            sessions.put(playerName, model);
         }
 
-        model.addModelListener(proxy);
+        model.join(listener, playerName);
     }
 
     /**

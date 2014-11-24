@@ -5,7 +5,7 @@ package im.fuad.rit.copads.p4;
  *
  * @author Fuad Saud <ffs3415@rit.edu>
  */
-public interface C4ModelListener {
+public interface C4ModelListener extends C4ServerListener {
     /**
      * Hook to be called when a marker is added to the board.
      *

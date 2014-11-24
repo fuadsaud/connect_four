@@ -14,15 +14,11 @@ public class MailboxManager {
     private SessionManager sessionManager;
     private byte[] payload;
 
-    private SocketAddress client1Address;
-    private SocketAddress client2Address;
-    private C4ViewProxy client1Proxy;
-    private C4ViewProxy client2Proxy;
-
     public MailboxManager(DatagramSocket socket) {
         this.socket = socket;
         this.proxies = new HashMap<SocketAddress, C4ViewProxy>();
         this.payload = new byte[128];
+        this.sessionManager = new SessionManager();
     }
 
     public void receiveMessage() throws IOException {
@@ -32,14 +28,7 @@ public class MailboxManager {
 
         SocketAddress clientAddress = packet.getSocketAddress();
 
-        // C4ViewProxy proxy = proxies.get(clientAddress);
-
-        if (client1Address == null) {
-            client1Address = clientAddress;
-
-            client1Proxy = new C4ViewProxy(socket, clientAddress);
-        } else if (client
-
+        C4ViewProxy proxy = proxies.get(clientAddress);
 
         if (proxy == null) {
             proxy = new C4ViewProxy(socket, clientAddress);

@@ -2,24 +2,54 @@ package im.fuad.rit.copads.p4.server;
 
 import java.io.IOException;
 
-import java.util.List;
-import java.util.LinkedList;
-
 import im.fuad.rit.copads.p4.C4ModelListener;
 import im.fuad.rit.copads.p4.C4ViewListener;
 import im.fuad.rit.copads.p4.C4Board;
 
 class C4Model implements C4ViewListener {
     private C4Board board;
-    private List<C4ModelListener> modelListeners;
+    private C4ModelListener player1;
+    private C4ModelListener player2;
+
+    private String player1Name;
+    private String player2Name;
+
+    private Integer turn;
+    private Boolean terminated;
 
     public C4Model() {
         this.board = new C4Board();
-        this.modelListeners = new LinkedList<C4ModelListener>();
     }
 
-    public void addModelListener(C4ModelListener listener) {
-        modelListeners.add(listener);
+    public void join(C4ModelListener listener, String playerName) {
+        try {
+            if (this.player1 == null) {
+                this.player1 = listener;
+                this.player1Name = playerName;
+
+                this.player1.number(1);
+                this.player1.name(1, this.player1Name);
+            } else if (this.player2 == null) {
+                this.player2 = listener;
+                this.player2Name = playerName;
+
+                this.turn = 1;
+
+                this.player1.name(2, this.player2Name);
+                this.player1.turn(this.turn);
+
+                this.player2.number(2);
+                this.player2.name(1, this.player1Name);
+                this.player2.name(2, this.player2Name);
+                this.player2.turn(this.turn);
+
+                this.player1.gameStarted();
+                this.player2.gameStarted();
+            }
+        // } catch(IOException e) {
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -32,10 +62,21 @@ class C4Model implements C4ViewListener {
      * @see C4ViewListener.clear()
      */
     public void clear() throws IOException {
-        this.board.clear();
+        try {
+            this.board.clear();
 
-        for (C4ModelListener listener : modelListeners) {
-            listener.cleared();
+            this.turn = 1;
+
+            this.player1.cleared();
+            this.player2.cleared();
+
+            this.player1.turn(this.turn);
+            this.player2.turn(this.turn);
+        // } catch(IOException e) {
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
+
+    public void terminate() { this.terminated = true; }
 }

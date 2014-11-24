@@ -59,7 +59,7 @@ public class C4Client {
             ui.setViewListener(modelProxy);
             modelProxy.setModelListener(modelClone);
 
-            modelProxy.join(playerName);
+            modelProxy.join(null, playerName);
         } catch(IOException e) {
             C4Client.terminate();
         }

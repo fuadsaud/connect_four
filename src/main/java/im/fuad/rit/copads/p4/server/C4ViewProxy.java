@@ -14,7 +14,7 @@ import im.fuad.rit.copads.p4.C4ModelListener;
 import im.fuad.rit.copads.p4.C4ViewListener;
 import im.fuad.rit.copads.p4.Player;
 
-class C4ViewProxy implements C4ModelListener {
+public class C4ViewProxy implements C4ModelListener {
     private DatagramSocket socket;
     private SocketAddress clientAddress;
     private C4ViewListener viewListener;
@@ -38,13 +38,13 @@ class C4ViewProxy implements C4ModelListener {
                 Byte playerNumber = in.readByte();
                 Byte column = in.readByte();
 
-                this.viewListener.join(this, );
-
                 System.out.println(String.format("%c %d %d", command, playerNumber, column));
 
                 break;
             case 'J':
                 String playerName = in.readUTF();
+
+                this.viewListener.join(this, playerName);
 
                 System.out.println(String.format("%c %s", command, playerName));
 
@@ -88,6 +88,12 @@ class C4ViewProxy implements C4ModelListener {
     public void turn(Player player) {
         sendMessage(new int[] { (int) 'T', player.getNumber() });
     }
+
+    public void number(Integer playerNumber) { }
+    public void name(Integer playerNumber, String playerName) { }
+    public void turn(Integer playerNumber) { }
+    public void add(Integer player, Integer row, Integer col) { }
+    public void clear() { }
 
     /**
      * Sets this object's view listener.

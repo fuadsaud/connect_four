@@ -4,20 +4,16 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
-import im.fuad.rit.copads.p4.C4ViewListener;
-import im.fuad.rit.copads.p4.C4ModelListener;
-import im.fuad.rit.copads.p4.C4Board;
-
-class SessionManager implements C4ViewListener {
+class SessionManager {
     private C4Model sessionWaitingForPlayer;
-    private HashMap<C4ModelListener, C4Model> sessions;
+    private HashMap<C4ViewProxy, C4Model> sessions;
 
     public SessionManager() {
-        this.sessions = new HashMap<C4ModelListener, C4Model>();
+        this.sessions = new HashMap<C4ViewProxy, C4Model>();
     }
 
-    public void join(C4ModelListener listener, String playerName) {
-        C4Model model = sessions.get(listener);
+    public C4Model joinSession(C4ViewProxy proxy) {
+        C4Model model = sessions.get(proxy);
 
         if (model == null) {
             if (this.sessionWaitingForPlayer == null) {
@@ -28,23 +24,9 @@ class SessionManager implements C4ViewListener {
                 this.sessionWaitingForPlayer = null;
             }
 
-            sessions.put(listener, model);
+            sessions.put(proxy, model);
         }
 
-        model.join(listener, playerName);
-    }
-
-    /**
-     * @see C4ViewListener.addMarker()
-     */
-    public void addMarker(Integer column) throws IOException {
-
-    }
-
-    /**
-     * @see C4ViewListener.clear()
-     */
-    public void clear() throws IOException {
-
+        return model;
     }
 }

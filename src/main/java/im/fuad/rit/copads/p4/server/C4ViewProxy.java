@@ -61,39 +61,89 @@ public class C4ViewProxy implements C4ModelListener {
     /**
      * @see C4ModelListener.markerAdded()
      */
-    public void markerAdded(Player player, Integer row, Integer col) {
-        sendMessage(new int[] { (int) 'A', (int) player.getNumber(), row, col });
-    }
+    public void markerAdded(Player player, Integer row, Integer col) throws IOException { }
 
     /**
      * @see C4ModelListener.cleared()
      */
-    public void cleared() {
-        sendMessage(new int[] { (int) 'C' });
-    }
+    public void cleared() throws IOException { }
 
     /**
      * @see C4ModelListener.gameStarted()
      */
-    public void gameStarted() {}
+    public void gameStarted() throws IOException {}
 
     /**
      * @see C4ModelListener.gameOver()
      */
-    public void gameOver() {}
+    public void gameOver() throws IOException {}
 
     /**
      * @see C4ModelListener.turn()
      */
-    public void turn(Player player) {
-        sendMessage(new int[] { (int) 'T', player.getNumber() });
+    public void turn(Player player) throws IOException { }
+
+    public void number(Integer playerNumber) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('#');
+        dos.writeInt(playerNumber);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
     }
 
-    public void number(Integer playerNumber) { }
-    public void name(Integer playerNumber, String playerName) { }
-    public void turn(Integer playerNumber) { }
-    public void add(Integer player, Integer row, Integer col) { }
-    public void clear() { }
+    public void name(Integer playerNumber, String playerName) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('N');
+        dos.writeInt(playerNumber);
+        dos.writeUTF(playerName);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
+
+    public void turn(Integer playerNumber) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('T');
+        dos.writeInt(playerNumber);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
+
+    public void add(Integer playerNumber, Integer row, Integer col) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('A');
+        dos.writeInt(playerNumber);
+        dos.writeInt(row);
+        dos.writeInt(col);
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
+
+    public void clear() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('C');
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
 
     /**
      * Sets this object's view listener.
@@ -104,22 +154,9 @@ public class C4ViewProxy implements C4ModelListener {
         this.viewListener = listener;
     }
 
-    private void sendMessage(int[] data) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DataOutputStream dos = new DataOutputStream(baos);
-
-            for (int b : data) { dos.writeByte(b); }
-
-            dos.close();
-
-            byte[] payload = baos.toByteArray();
-
-            socket.send(
-                    new DatagramPacket(
-                        payload, payload.length, this.clientAddress));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+    private void sendMessage(byte[] payload) throws IOException {
+        socket.send(
+                new DatagramPacket(
+                    payload, payload.length, this.clientAddress));
     }
 }

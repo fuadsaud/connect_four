@@ -1,5 +1,7 @@
 package im.fuad.rit.copads.p4;
 
+import java.io.IOException;
+
 /**
  * This class provides the client with a clone of the model present on the game server.
  *
@@ -26,14 +28,15 @@ class C4ModelClone implements C4ModelListener {
     /**
      * @see C4ModelListener.markerAdded()
      */
-    public void markerAdded(Player player, Integer row, Integer col) {
+    public void markerAdded(Player player, Integer row, Integer col) throws IOException {
         this.board.play(player.getNumber(), row, col);
-        this.modelListener.markerAdded(player, row, col); }
+        this.modelListener.markerAdded(player, row, col);
+    }
 
     /**
      * @see C4ModelListener.cleared()
      */
-    public void cleared() {
+    public void cleared() throws IOException {
         this.board.clear();
 
         this.modelListener.cleared();
@@ -42,17 +45,17 @@ class C4ModelClone implements C4ModelListener {
     /**
      * @see C4ModelListener.gameStarted()
      */
-    public void gameStarted() { this.modelListener.gameStarted(); }
+    public void gameStarted() throws IOException { this.modelListener.gameStarted(); }
 
     /**
      * @see C4ModelListener.gameOver()
      */
-    public void gameOver() { this.modelListener.gameOver(); }
+    public void gameOver() throws IOException { this.modelListener.gameOver(); }
 
     /**
      * @see C4ModelListener.turn()
      */
-    public void turn(Player player) { this.modelListener.turn(player); }
+    public void turn(Player player) throws IOException { this.modelListener.turn(player); }
 
     public void clear() {}
 

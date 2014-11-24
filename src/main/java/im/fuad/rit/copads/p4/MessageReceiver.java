@@ -1,9 +1,12 @@
 package im.fuad.rit.copads.p4;
 
-import java.net.Socket;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.DataInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+
+import java.net.DatagramSocket;
+import java.net.DatagramPacket;
+
 import java.util.List;
 import java.util.Arrays;
 
@@ -16,8 +19,8 @@ import im.fuad.rit.copads.p4.C4ServerListener;
  * @author Fuad Saud <ffs3415@rit.edu>
  */
 class MessageReceiver {
+    private DatagramSocket socket;
     private C4ServerListener listener;
-    private BufferedReader reader;
 
     /**
      * Initializes a receiver but don't start reading from the socket.
@@ -25,68 +28,49 @@ class MessageReceiver {
      * @param socket the socket to be read from; it is expected to be already connected.
      * @param listener the listener on which to fire events when messages are received.
      */
-    public MessageReceiver(Socket socket, C4ServerListener listener) throws IOException {
+    public MessageReceiver(DatagramSocket socket, C4ServerListener listener) throws IOException {
+        this.socket = socket;
         this.listener = listener;
-        this.reader =
-            new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
     }
 
     /**
      * Starts reading from the socket.
      */
     public void listen() throws IOException {
-        String line;
+        byte[] payload = new byte[128];
 
-        while ((line = reader.readLine()) != null) {
-            processCommand(Arrays.asList(line.split(" ")));
+        while(true) {
+            DatagramPacket packet = new DatagramPacket(payload, payload.length);
+
+            socket.receive(packet);
+
+            DataInputStream in = new DataInputStream(
+                    new ByteArrayInputStream(payload, 0, packet.getLength()));
+
+            Character command = in.readChar();
+
+            switch(command) {
+                case '#':
+                    this.listener.number(in.readInt());
+
+                    break;
+                case 'N':
+                    this.listener.name(in.readInt(), in.readUTF());
+
+                    break;
+                case 'T':
+                    this.listener.turn(in.readInt());
+
+                    break;
+                case 'A':
+                    this.listener.add(in.readInt(), in.readInt(), in.readInt());
+
+                    break;
+                case 'C':
+                    this.listener.clear();
+
+                    break;
+            }
         }
-    }
-
-    /**
-     * Interprets a command received from the game server and fires the correspondent method on
-     * this object.
-     *
-     * @param commandParts a list with each piece of the command as an element.
-     */
-    private void processCommand(List<String> commandParts) {
-        String commandName = commandParts.get(0);
-
-        if (commandName.equals("number"))      number(commandParts);
-        else if (commandName.equals("name"))   name(commandParts);
-        else if (commandName.equals("turn"))   turn(commandParts);
-        else if (commandName.equals("add"))    add(commandParts);
-        else if (commandName.equals("clear"))  clear(commandParts);
-    }
-
-    /**
-     * Interprets a command received from the game server and fires the correspondent method on
-     * this object.
-     *
-     * @param commandParts a list with each piece of the command as an element.
-     */
-    private void number(List<String> commandParts) {
-        this.listener.number(Integer.valueOf(commandParts.get(1)));
-    }
-
-    private void name(List<String> commandParts) {
-        this.listener.name(
-                Integer.valueOf(commandParts.get(1)),
-                commandParts.get(2));
-    }
-
-    private void turn(List<String> commandParts) {
-        this.listener.turn(Integer.valueOf(commandParts.get(1)));
-    }
-
-    private void add(List<String> commandParts) {
-        this.listener.add(
-                Integer.valueOf(commandParts.get(1)),
-                Integer.valueOf(commandParts.get(2)),
-                Integer.valueOf(commandParts.get(3)));
-    }
-
-    private void clear(List<String> commandParts) {
-        this.listener.clear();
     }
 }

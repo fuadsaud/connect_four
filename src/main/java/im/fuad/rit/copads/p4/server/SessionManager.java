@@ -51,4 +51,9 @@ class SessionManager implements C4ViewListener {
      * @see C4ViewListener.clear()
      */
     public void clear() throws IOException { }
+
+    /**
+     * @see C4ViewListener.disconnect()
+     */
+    public void leave() throws IOException { }
 }

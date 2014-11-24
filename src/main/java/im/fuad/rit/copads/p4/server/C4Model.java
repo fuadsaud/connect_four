@@ -92,4 +92,15 @@ class C4Model implements C4ViewListener {
     }
 
     public void terminate() { this.terminated = true; }
+
+    public void leave() {
+        try {
+            this.player1.left();
+            this.player2.left();
+
+            this.terminate();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

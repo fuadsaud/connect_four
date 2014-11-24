@@ -46,13 +46,18 @@ class C4ModelClone implements C4ModelListener {
     }
 
     /**
+     * @see C4ModelListener.left()
+     */
+    public void left() throws IOException {
+        this.modelListener.left();
+    }
+
+    /**
      * @see C4ModelListener.turn()
      */
     public void turn(Integer playerNumber) throws IOException {
         this.modelListener.turn(playerNumber);
     }
-
-    public void clear() {}
 
     /**
      * Sets this object's model listener.

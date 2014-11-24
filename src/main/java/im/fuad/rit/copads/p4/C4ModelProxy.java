@@ -38,14 +38,7 @@ class C4ModelProxy implements C4ViewListener {
     }
 
     /**
-     * @see C4ViewListener.clear()
-     */
-    public void clear() throws IOException {
-        this.dispatcher.sendClearMessage();
-    }
-
-    /**
-     * Informs the model that this player is joining the game session with the given name.
+     * @see C4ViewListener.join()
      */
     public void join(C4ModelListener modelListener, String playerName) throws IOException {
         if (this.myNumber == null) {
@@ -53,6 +46,20 @@ class C4ModelProxy implements C4ViewListener {
 
             new Thread(new ServerReader()).start();
         }
+    }
+
+    /**
+     * @see C4ViewListener.clear()
+     */
+    public void clear() throws IOException {
+        this.dispatcher.sendClearMessage();
+    }
+
+    /**
+     * @see C4ViewListener.leave()
+     */
+    public void leave() throws IOException {
+        this.dispatcher.sendLeaveMessage();
     }
 
     /**
@@ -129,5 +136,10 @@ class C4ModelProxy implements C4ViewListener {
          * @see C4ModelListener.cleared()
          */
         public void cleared() throws IOException { modelListener.cleared(); }
+
+        /**
+         * @see C4ModelListener.left()
+         */
+        public void left() throws IOException { modelListener.left(); }
     }
 }

@@ -24,6 +24,8 @@ public class C4ViewProxy implements C4ModelListener {
     }
 
     public Boolean process(DatagramPacket packet) throws IOException {
+        Boolean disconnect = false;
+
         DataInputStream in = new DataInputStream(
                 new ByteArrayInputStream(
                     packet.getData(), 0, packet.getLength()));
@@ -56,9 +58,13 @@ public class C4ViewProxy implements C4ModelListener {
                 System.out.println(command);
 
                 break;
+            case 'L':
+                this.viewListener.leave();
+
+                disconnect = true;
         }
 
-        return false;
+        return disconnect;
     }
 
     /**
@@ -86,6 +92,20 @@ public class C4ViewProxy implements C4ModelListener {
         DataOutputStream dos = new DataOutputStream(baos);
 
         dos.writeChar('C');
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+    }
+
+    /**
+     * @see C4ModelListener.left()
+     */
+    public void left() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('L');
 
         dos.close();
 

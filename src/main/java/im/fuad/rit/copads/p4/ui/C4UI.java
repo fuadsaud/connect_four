@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -103,8 +105,14 @@ public class C4UI implements C4ModelListener {
             }
         });
 
+        this.frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                leave();
+            }
+        });
+
         // Closing the window exits the client.
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Display window.
         this.frame.pack();
@@ -144,6 +152,8 @@ public class C4UI implements C4ModelListener {
      */
     public void cleared() { repaint(); }
 
+    public void left() { terminate(); }
+
     /**
      * Sets this object's view listener.
      *
@@ -164,6 +174,14 @@ public class C4UI implements C4ModelListener {
     public void clear() {
         try {
             this.viewListener.clear();
+        } catch(IOException e) {
+            terminate();
+        }
+    }
+
+    private void leave() {
+        try {
+            this.viewListener.leave();
         } catch(IOException e) {
             terminate();
         }

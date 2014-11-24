@@ -23,4 +23,6 @@ public interface C4ViewListener {
     public void clear() throws IOException;
 
     public void join(C4ModelListener listener, String playerName) throws IOException;
+
+    public void leave() throws IOException;
 }

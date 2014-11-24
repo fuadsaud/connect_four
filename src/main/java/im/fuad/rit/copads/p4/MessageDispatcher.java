@@ -81,6 +81,21 @@ class MessageDispatcher {
     }
 
     /**
+     * Sends a 'leave' message to the game server.
+     */
+    public void sendLeaveMessage() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeChar('L');
+
+        dos.close();
+
+        sendMessage(baos.toByteArray());
+
+    }
+
+    /**
      * Writes a byte array to the socket.
      *
      * @param message the message to be written to the socket.

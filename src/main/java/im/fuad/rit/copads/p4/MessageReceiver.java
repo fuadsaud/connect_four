@@ -75,6 +75,11 @@ class MessageReceiver {
                     this.listener.cleared();
 
                     break;
+                case 'L':
+                    System.out.println('L');
+                    this.listener.left();
+
+                    break;
             }
         }
     }

@@ -44,5 +44,7 @@ public interface C4ModelListener {
      * @param playerNumber the player's number (1 or 2).
      */
     public void turn(Integer playerNumber) throws IOException;
+
+    public void left() throws IOException;
 }
 

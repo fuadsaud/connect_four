@@ -69,16 +69,6 @@ public class C4ViewProxy implements C4ModelListener {
      */
     public void cleared() throws IOException { }
 
-    /**
-     * @see C4ModelListener.gameStarted()
-     */
-    public void gameStarted() throws IOException {}
-
-    /**
-     * @see C4ModelListener.gameOver()
-     */
-    public void gameOver() throws IOException {}
-
     public void number(Integer playerNumber) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);

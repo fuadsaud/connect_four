@@ -22,15 +22,6 @@ public interface C4ModelListener extends C4ServerListener {
      */
     public void cleared() throws IOException;
 
-    /**
-     * Hook to be called when the game starts.
-     */
-    public void gameStarted() throws IOException;
-
-    /**
-     * Hook to be called when the game ends.
-     */
-    public void gameOver() throws IOException;
 
     /**
      * Hook to be called when the a new turn starts.

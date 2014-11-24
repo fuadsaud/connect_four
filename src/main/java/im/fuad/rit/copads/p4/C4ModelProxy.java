@@ -114,10 +114,7 @@ class C4ModelProxy implements C4ViewListener {
          * @see C4ServerListener.turn()
          */
         public void turn(Integer playerNumber) throws IOException {
-            if (playerNumber == 0)
-                modelListener.gameOver();
-            else
-                modelListener.turn(playerNumber);
+            modelListener.turn(playerNumber);
         }
 
         /**

@@ -146,16 +146,6 @@ public class C4UI implements C4ModelListener {
     public void cleared() { repaint(); }
 
     /**
-     * @see C4ModelListener.gameStarted()
-     */
-    public void gameStarted() {}
-
-    /**
-     * @see C4ModelListener.gameOver()
-     */
-    public void gameOver() {  }
-
-    /**
      * Sets this object's view listener.
      *
      * @param listener the view listener to be registered.

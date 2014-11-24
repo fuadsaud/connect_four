@@ -42,16 +42,6 @@ class C4ModelClone implements C4ModelListener {
     }
 
     /**
-     * @see C4ModelListener.gameStarted()
-     */
-    public void gameStarted() throws IOException { this.modelListener.gameStarted(); }
-
-    /**
-     * @see C4ModelListener.gameOver()
-     */
-    public void gameOver() throws IOException { this.modelListener.gameOver(); }
-
-    /**
      * @see C4ModelListener.turn()
      */
     public void turn(Integer playerNumber) throws IOException {

@@ -82,7 +82,7 @@ class C4ModelProxy implements C4ViewListener {
      *
      * @author Fuad Saud <ffs3415@rit.edu>
      */
-    private class ServerReader implements Runnable, C4ServerListener {
+    private class ServerReader implements Runnable, C4ModelListener {
         public void run() {
             try { new MessageReceiver(socket, this).listen(); }
             catch(IOException e) { }
@@ -93,14 +93,14 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * @see C4ServerListener.number()
+         * @see C4ModelListener.number()
          */
         public void number(Integer playerNumber) throws IOException {
             myNumber = playerNumber;
         }
 
         /**
-         * @see C4ServerListener.name()
+         * @see C4ModelListener.name()
          */
         public void name(Integer playerNumber, String playerName) throws IOException {
             if (playerNumber == myNumber) {
@@ -111,22 +111,22 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * @see C4ServerListener.turn()
+         * @see C4ModelListener.turn()
          */
         public void turn(Integer playerNumber) throws IOException {
             modelListener.turn(playerNumber);
         }
 
         /**
-         * @see C4ServerListener.add()
+         * @see C4ModelListener.markerAdded()
          */
-        public void add(Integer playerNumber, Integer row, Integer col) throws IOException {
+        public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException {
             modelListener.markerAdded(playerNumber, row, col);
         }
 
         /**
-         * @see C4ServerListener.clear()
+         * @see C4ModelListener.cleared()
          */
-        public void clear() throws IOException { modelListener.cleared(); }
+        public void cleared() throws IOException { modelListener.cleared(); }
     }
 }

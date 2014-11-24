@@ -10,7 +10,7 @@ import java.net.DatagramPacket;
 import java.util.List;
 import java.util.Arrays;
 
-import im.fuad.rit.copads.p4.C4ServerListener;
+import im.fuad.rit.copads.p4.C4ModelListener;
 
 /**
  * This class is responsible for listening to incoming messages from the server through a socket
@@ -20,7 +20,7 @@ import im.fuad.rit.copads.p4.C4ServerListener;
  */
 class MessageReceiver {
     private DatagramSocket socket;
-    private C4ServerListener listener;
+    private C4ModelListener listener;
 
     /**
      * Initializes a receiver but don't start reading from the socket.
@@ -28,7 +28,7 @@ class MessageReceiver {
      * @param socket the socket to be read from; it is expected to be already connected.
      * @param listener the listener on which to fire events when messages are received.
      */
-    public MessageReceiver(DatagramSocket socket, C4ServerListener listener) throws IOException {
+    public MessageReceiver(DatagramSocket socket, C4ModelListener listener) throws IOException {
         this.socket = socket;
         this.listener = listener;
     }
@@ -63,11 +63,11 @@ class MessageReceiver {
 
                     break;
                 case 'A':
-                    this.listener.add(in.readInt(), in.readInt(), in.readInt());
+                    this.listener.markerAdded(in.readInt(), in.readInt(), in.readInt());
 
                     break;
                 case 'C':
-                    this.listener.clear();
+                    this.listener.cleared();
 
                     break;
             }

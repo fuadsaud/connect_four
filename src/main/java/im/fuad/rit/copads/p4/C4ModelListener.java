@@ -7,7 +7,7 @@ import java.io.IOException;
  *
  * @author Fuad Saud <ffs3415@rit.edu>
  */
-public interface C4ModelListener extends C4ServerListener {
+public interface C4ModelListener {
     /**
      * Hook to be called when a marker is added to the board.
      *
@@ -22,11 +22,26 @@ public interface C4ModelListener extends C4ServerListener {
      */
     public void cleared() throws IOException;
 
+    /**
+     * Sets this client's player number.
+     *
+     * @param playerNumber the player's number (1 or 2).
+     */
+    public void number(Integer playerNumber) throws IOException;
 
     /**
-     * Hook to be called when the a new turn starts.
+     * Registers a player in the session. If it is the opponent that's being registered it also
+     * fires the start event in the model listener.
      *
-     * @param player the number of the player to which this new turn belongs.
+     * @param playerNumber the player's number (1 or 2).
+     * @param playerName the player's name.
+     */
+    public void name(Integer playerNumber, String playerName) throws IOException;
+
+    /**
+     * Initiates a new turn in the game for the given player.
+     *
+     * @param playerNumber the player's number (1 or 2).
      */
     public void turn(Integer playerNumber) throws IOException;
 }

@@ -26,7 +26,7 @@ class ConnectFour {
         }
 
         String host = arguments.get(0);
-        Short port = Short.valueOf(arguments.get(1));
+        Short  port = Short.valueOf(arguments.get(1));
         String playerName = arguments.get(2);
 
         new C4Client(host, port, playerName).call();

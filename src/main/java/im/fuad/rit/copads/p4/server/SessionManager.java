@@ -9,18 +9,26 @@ import im.fuad.rit.copads.p4.C4ModelListener;
 import im.fuad.rit.copads.p4.C4Board;
 
 class SessionManager implements C4ViewListener {
-    private HashMap<String, C4Model> sessions;
+    private C4Model sessionWaitingForPlayer;
+    private HashMap<C4ModelListener, C4Model> sessions;
 
     public SessionManager() {
-        this.sessions = new HashMap<String, C4Model>();
+        this.sessions = new HashMap<C4ModelListener, C4Model>();
     }
 
     public void join(C4ModelListener listener, String playerName) {
-        C4Model model = sessions.get(playerName);
+        C4Model model = sessions.get(listener);
 
         if (model == null) {
-            model = new C4Model();
-            sessions.put(playerName, model);
+            if (this.sessionWaitingForPlayer == null) {
+                this.sessionWaitingForPlayer = model = new C4Model();
+            } else {
+                model = this.sessionWaitingForPlayer;
+
+                this.sessionWaitingForPlayer = null;
+            }
+
+            sessions.put(listener, model);
         }
 
         model.join(listener, playerName);

@@ -1,4 +1,4 @@
-package im.fuad.rit.copads.p4.server;
+package im.fuad.rit.copads.p4;
 
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;

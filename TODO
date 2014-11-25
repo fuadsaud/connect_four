@@ -1,3 +1,7 @@
-- Implement diagonal win-condition check
+- Fix win condition
 - Handle IO errors correctly
+- Check tie condition
+- Remove all debugging
+- Review all classes for hanging methods, etc
+- Rework all documentation
 - Prepare for submission

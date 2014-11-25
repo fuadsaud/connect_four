@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketAddress;
 
-import im.fuad.rit.copads.p4.server.C4ViewProxy;
+import im.fuad.rit.copads.p4.C4ViewProxy;
 
 /**
  * Provides the network proxy for the model object in the server. It listen to events fired on the

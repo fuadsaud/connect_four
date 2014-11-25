@@ -6,7 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import im.fuad.rit.copads.p4.server.MailboxManager;
+import im.fuad.rit.copads.p4.MailboxManager;
 
 public class C4Server {
     private InetSocketAddress address;

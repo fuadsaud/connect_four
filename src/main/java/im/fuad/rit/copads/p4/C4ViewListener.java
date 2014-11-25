@@ -2,7 +2,7 @@ package im.fuad.rit.copads.p4;
 
 import java.io.IOException;
 
-import im.fuad.rit.copads.p4.server.C4ViewProxy;
+import im.fuad.rit.copads.p4.C4ViewProxy;
 
 /**
  * Defines the operations necessary for objects that want to listen to view events.

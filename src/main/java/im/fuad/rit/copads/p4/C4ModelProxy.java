@@ -79,13 +79,6 @@ class C4ModelProxy implements C4ViewListener {
     }
 
     /**
-     * Gets this players' number.
-     *
-     * @return this player's number.
-     */
-    public Integer getMyNumber() { return this.myNumber; }
-
-    /**
      * Sets this object's model listener.
      *
      * @param listener the model listener to be registered.

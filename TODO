@@ -2,9 +2,5 @@
 - Handle IO errors correctly
 - Check tie condition
 - Remove all debugging
-- Review all classes for hanging methods, etc
 - Rework all documentation
 - Prepare for submission
-- Remove getMyNumber
-- Review class author
-- Rewrite hook docs

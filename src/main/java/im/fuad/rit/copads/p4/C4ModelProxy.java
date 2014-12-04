@@ -153,7 +153,7 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * Hook to be called when a marker is added to the board.
+         * Forwards the event to the registered model listener.
          *
          * @param playerNumber the number of the player who's making the move.
          * @param row the row in which the marker is being added.
@@ -166,7 +166,7 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * Hook to be called when the board is cleared.
+         * Forwards the event to the registered model listener.
          *
          * @exception IOException thrown if an I/O error occurred.
          */

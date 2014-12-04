@@ -8,6 +8,8 @@ import im.fuad.rit.copads.p4.C4Board;
 
 /**
  * Server side model for the Connect Four game.
+ *
+ * @author Fuad Saud <ffs3415@rit.edu>
  */
 class C4Model implements C4ViewListener {
     private C4Board board;

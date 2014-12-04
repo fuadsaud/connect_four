@@ -8,6 +8,12 @@ import java.net.SocketException;
 
 import im.fuad.rit.copads.p4.MailboxManager;
 
+/**
+ * This class is responsible for setting up objects and connections necessary for the server to
+ * listen to incoming connections and communicate with clients.
+ *
+ * @author Fuad Saud <ffs3415@rit.edu>
+ */
 public class C4Server {
     private InetSocketAddress address;
 

@@ -119,10 +119,22 @@ public class C4UI implements C4ModelListener {
         this.frame.setVisible(true);
     }
 
+    /**
+     * Sets this client's player number.
+     *
+     * @param playerNumber the player's number (1 or 2).
+     */
     public void number(Integer playerNumber) {
         this.myNumber = playerNumber;
     }
 
+    /**
+     * Stores the registered player name and if it's the opponent who's registering, start the
+     * game.
+     *
+     * @param playerNumber the player's number (1 or 2).
+     * @param playerName the player's name.
+     */
     public void name(Integer playerNumber, String playerName) {
         if (this.myNumber != playerNumber) {
             this.opponentsName = playerName;
@@ -131,6 +143,12 @@ public class C4UI implements C4ModelListener {
         }
     }
 
+    /**
+     * Initiates a new turn in the game for the given player. Updates the status message
+     * accordingly.
+     *
+     * @param playerNumber the player's number (1 or 2).
+     */
     public void turn(Integer playerNumber) {
         if (playerNumber == 0)
             setMessage("Game over");
@@ -140,18 +158,23 @@ public class C4UI implements C4ModelListener {
             setMessage(this.opponentsName + "'s turn");
     }
 
-    public void add(Integer player, Integer row, Integer col) { }
-
     /**
-     * @see C4ModelListener.markerAdded()
+     * Repaint the board when a marker is added to it.
+     *
+     * @param playerNumber the number of the player who's making the move.
+     * @param row the row in which the marker is being added.
+     * @param col the column in which the marker is being added.
      */
     public void markerAdded(Integer playerNumber, Integer row,  Integer col) { repaint(); }
 
     /**
-     * @see C4ModelListener.cleared()
+     * Repaint the board when the it is cleared.
      */
     public void cleared() { repaint(); }
 
+    /**
+     * Terminate when the session is over.
+     */
     public void left() { terminate(); }
 
     /**
@@ -163,6 +186,12 @@ public class C4UI implements C4ModelListener {
         this.viewListener = listener;
     }
 
+    /**
+     * Tells the view listener this client has added a marker in the given column.
+     *
+     * @param playerNumber this player's number.
+     * @param column the column in which the marker is being added.
+     */
     private void addMarker(Integer playerNumber, Integer column) {
         try {
             this.viewListener.addMarker(playerNumber, column);
@@ -171,6 +200,9 @@ public class C4UI implements C4ModelListener {
         }
     }
 
+    /**
+     * Tells the view listener this client is clearing the board.
+     */
     public void clear() {
         try {
             this.viewListener.clear();
@@ -179,6 +211,9 @@ public class C4UI implements C4ModelListener {
         }
     }
 
+    /**
+     * Tells the view listener this client is leaving the session.
+     */
     private void leave() {
         try {
             this.viewListener.leave();
@@ -187,11 +222,20 @@ public class C4UI implements C4ModelListener {
         }
     }
 
+    /**
+     * Repaints the board on the screen.
+     */
     private void repaint() { this.boardPanel.repaint(); }
 
-    private void setMessage(String message) {
-        this.message.setText(message);
-    }
+    /**
+     * Sets the status message.
+     *
+     * @param message the new status message.
+     */
+    private void setMessage(String message) { this.message.setText(message); }
 
+    /**
+     * Asks for the termination of this client
+     */
     private void terminate() { C4Client.terminate(); }
 }

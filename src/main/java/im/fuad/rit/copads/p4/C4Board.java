@@ -59,21 +59,37 @@ public class C4Board implements C4BoardIntf {
     public void clear() { this.board = new int[ROWS][COLS]; }
 
     /**
-     * @see C4BoardIntf.hasPlayer1Marker();
+     * Determine if the given row and column contains player 1's marker.
+     *
+     * @param  r  Row.
+     * @param  c  Column.
+     *
+     * @return  True if (r, c) contains player 1's marker, false otherwise.
      */
     public boolean hasPlayer1Marker(int r, int c) {
         return this.board[r][c] == PLAYER_1_MARK;
     }
 
     /**
-     * @see C4BoardIntf.hasPlayer2Marker();
+     * Determine if the given row and column contains player 2's marker.
+     *
+     * @param  r  Row.
+     * @param  c  Column.
+     *
+     * @return  True if (r, c) contains player 2's marker, false otherwise.
      */
     public boolean hasPlayer2Marker(int r, int c) {
         return this.board[r][c] == PLAYER_2_MARK;
     }
 
     /**
-     * @see C4BoardIntf.hasWon();
+     * Determine if one player or the other has won; that is, has four markers
+     * in a row horizontally, vertically, or diagonally. If so, an array of four
+     * integers (r1, c1, r2, c2) is returned, where (r1, c1) is the row/column
+     * of the first of the four markers and (r2, c2) is the row/column of the
+     * last of the four markers. If neither player has won, null is returned.
+     *
+     * @return  Array of (r1, c1, r2, c2), or null.
      */
     public int[] hasWon() {
         int[] result;

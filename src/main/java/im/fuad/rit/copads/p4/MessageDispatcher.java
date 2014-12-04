@@ -22,6 +22,8 @@ class MessageDispatcher {
      * Initializes a dispatcher.
      *
      * @param socket the socket to be write commands to.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public MessageDispatcher(DatagramSocket socket, SocketAddress serverAddress)
         throws IOException {
@@ -34,6 +36,8 @@ class MessageDispatcher {
      *
      * @param player the player number for which to make the move.
      * @param column the column selected to add the marker.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void sendAddMarkerMessage(Integer player, Integer column) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -52,6 +56,8 @@ class MessageDispatcher {
      * Sends a 'join' message to the game server.
      *
      * @param playerName the name of the player who's joining the session.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void sendJoinMessage(String playerName) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -67,6 +73,8 @@ class MessageDispatcher {
 
     /**
      * Sends a 'clear' message to the game server.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void sendClearMessage() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -82,6 +90,8 @@ class MessageDispatcher {
 
     /**
      * Sends a 'leave' message to the game server.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void sendLeaveMessage() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -99,6 +109,8 @@ class MessageDispatcher {
      * Writes a byte array to the socket.
      *
      * @param message the message to be written to the socket.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     private void sendMessage(byte[] payload) throws IOException {
         this.socket.send(

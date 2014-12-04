@@ -21,6 +21,8 @@ class ConnectFourServer {
         List<String> arguments = Arrays.asList(args);
 
         if (arguments.size() != 2) {
+            System.err.println("Wrong number of arguments: " + arguments.size() + " instead of 3");
+
             usage();
 
             return;
@@ -33,13 +35,13 @@ class ConnectFourServer {
     }
 
     /**
-     * Prints usage information to the standard output.
+     * Prints usage information to the STDERR.
      */
     private static void usage() {
-        System.out.println("USAGE:");
-        System.out.println("\tjava ConnectFourServer <HOST> <PORT>");
-        System.out.println("\t\t<HOST>: the host name or IP address of the server");
-        System.out.println("\t\t<PORT>: the port number of the server");
-        System.out.println("\n\t\tExample: java ConnectFour localhost 5678");
+        System.err.println("USAGE:");
+        System.err.println("\tjava ConnectFourServer <HOST> <PORT>");
+        System.err.println("\t\t<HOST>: the host name or IP address of the server");
+        System.err.println("\t\t<PORT>: the port number of the server");
+        System.err.println("\n\t\tExample: java ConnectFour localhost 5678");
     }
 }

@@ -27,6 +27,8 @@ class MessageReceiver {
      *
      * @param socket the socket to be read from; it is expected to be already connected.
      * @param listener the listener on which to fire events when messages are received.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public MessageReceiver(DatagramSocket socket, C4ModelListener listener) throws IOException {
         this.socket = socket;
@@ -35,6 +37,8 @@ class MessageReceiver {
 
     /**
      * Starts reading from the socket.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void listen() throws IOException {
         byte[] payload = new byte[128];

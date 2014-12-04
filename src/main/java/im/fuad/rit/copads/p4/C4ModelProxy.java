@@ -24,6 +24,8 @@ class C4ModelProxy implements C4ViewListener {
      * Initializes a model proxy.
      *
      * @param socket the socket used to communicate with the server.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public C4ModelProxy(DatagramSocket socket, SocketAddress serverAddress) throws IOException {
         this.socket = socket;
@@ -31,14 +33,24 @@ class C4ModelProxy implements C4ViewListener {
     }
 
     /**
-     * @see C4ViewListener.addMarker()
+     * Informs the model that a marker should be added for the current player in the given column.
+     *
+     * @param playerNumber the player number for which the marker is to be added.;
+     * @param column the column in which the marker is to be added.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void addMarker(Integer playerNumber, Integer column) throws IOException {
         this.dispatcher.sendAddMarkerMessage(this.myNumber, column);
     }
 
     /**
-     * @see C4ViewListener.join()
+     * Joins this game model.
+     *
+     * @param listener the object to listen for model events for this new player.
+     * @param playerName this new player's name.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void join(C4ModelListener modelListener, String playerName) throws IOException {
         if (this.myNumber == null) {
@@ -49,14 +61,18 @@ class C4ModelProxy implements C4ViewListener {
     }
 
     /**
-     * @see C4ViewListener.clear()
+     * Informs the model to clear the game board.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void clear() throws IOException {
         this.dispatcher.sendClearMessage();
     }
 
     /**
-     * @see C4ViewListener.leave()
+     * Leave the game model.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void leave() throws IOException {
         this.dispatcher.sendLeaveMessage();
@@ -90,6 +106,10 @@ class C4ModelProxy implements C4ViewListener {
      * @author Fuad Saud <ffs3415@rit.edu>
      */
     private class ServerReader implements Runnable, C4ModelListener {
+        /**
+         * Main thread execution method. Starts Message receiver and tell it to listen for new
+         * messsages from the server.
+         */
         public void run() {
             try { new MessageReceiver(socket, this).listen(); }
             catch(IOException e) { }
@@ -99,18 +119,28 @@ class C4ModelProxy implements C4ViewListener {
             }
         }
 
-        /**
-         * @see C4ModelListener.number()
-         */
+    /**
+     * Sets this client's player number.
+     *
+     * @param playerNumber the player's number (1 or 2).
+     *
+     * @exception IOException thrown if an I/O error occurred.
+     */
         public void number(Integer playerNumber) throws IOException {
             myNumber = playerNumber;
 
             modelListener.number(playerNumber);
         }
 
-        /**
-         * @see C4ModelListener.name()
-         */
+    /**
+     * Registers a player in the session. If it is the opponent that's being registered it also
+     * fires the start event in the model listener.
+     *
+     * @param playerNumber the player's number (1 or 2).
+     * @param playerName the player's name.
+     *
+     * @exception IOException thrown if an I/O error occurred.
+     */
         public void name(Integer playerNumber, String playerName) throws IOException {
             if (playerNumber == myNumber)
                 myName = playerName;
@@ -119,26 +149,40 @@ class C4ModelProxy implements C4ViewListener {
         }
 
         /**
-         * @see C4ModelListener.turn()
+         * Initiates a new turn in the game for the given player.
+         *
+         * @param playerNumber the player's number (1 or 2).
+         *
+         * @exception IOException thrown if an I/O error occurred.
          */
         public void turn(Integer playerNumber) throws IOException {
             modelListener.turn(playerNumber);
         }
 
         /**
-         * @see C4ModelListener.markerAdded()
+         * Hook to be called when a marker is added to the board.
+         *
+         * @param playerNumber the number of the player who's making the move.
+         * @param row the row in which the marker is being added.
+         * @param col the column in which the marker is being added.
+         *
+         * @exception IOException thrown if an I/O error occurred.
          */
         public void markerAdded(Integer playerNumber, Integer row, Integer col) throws IOException {
             modelListener.markerAdded(playerNumber, row, col);
         }
 
         /**
-         * @see C4ModelListener.cleared()
+         * Hook to be called when the board is cleared.
+         *
+         * @exception IOException thrown if an I/O error occurred.
          */
         public void cleared() throws IOException { modelListener.cleared(); }
 
         /**
-         * @see C4ModelListener.left()
+         * Notifies that the game session was terminated because a player left it.
+         *
+         * @exception IOException thrown if an I/O error occurred.
          */
         public void left() throws IOException { modelListener.left(); }
     }

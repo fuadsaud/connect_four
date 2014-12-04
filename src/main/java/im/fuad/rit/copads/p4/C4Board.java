@@ -20,6 +20,13 @@ public class C4Board implements C4BoardIntf {
      */
     public C4Board() { clear(); }
 
+    /**
+     * Adds a marker to the board. Figures out the proper row in which to add the marker in the
+     * given column.
+     *
+     * @param player the player number for which the move is being made (1 or 2).
+     * @param col the column in which the marker should be added.
+     */
     public int[] play(int player, int col) {
         return play(player, rowForColumn(col), col);
     }
@@ -47,11 +54,7 @@ public class C4Board implements C4BoardIntf {
     }
 
     /**
-     * Adds a marker to the board.
-     *
-     * @param player the player number for which the move is being made (1 or 2).
-     * @param row the row in which the marker should be added.
-     * @param col the column in which the marker should be added.
+     * Clears the game board.
      */
     public void clear() { this.board = new int[ROWS][COLS]; }
 
@@ -198,6 +201,13 @@ public class C4Board implements C4BoardIntf {
         return null;
     }
 
+    /**
+     * Determines the first free row in a given column.
+     *
+     * @param col the column in which to search the free row.
+     *
+     * @return the first free row index or -1 if column is full.
+     */
     private int rowForColumn(int col) {
         for (int i = ROWS - 1; i >= 0; i--)
             if (this.board[i][col] == 0)

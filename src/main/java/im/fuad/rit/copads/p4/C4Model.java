@@ -6,6 +6,9 @@ import im.fuad.rit.copads.p4.C4ModelListener;
 import im.fuad.rit.copads.p4.C4ViewListener;
 import im.fuad.rit.copads.p4.C4Board;
 
+/**
+ * Server side model for the Connect Four game.
+ */
 class C4Model implements C4ViewListener {
     private C4Board board;
     private C4ModelListener player1;
@@ -17,10 +20,20 @@ class C4Model implements C4ViewListener {
     private Integer turn;
     private Boolean terminated;
 
+    /**
+     * Intializes this model with an empty board.
+     */
     public C4Model() {
+        this.terminated = false;
         this.board = new C4Board();
     }
 
+    /**
+     * Joins this game model.
+     *
+     * @param listener the object to listen for model events for this new player.
+     * @param playerName this new player's name.
+     */
     public void join(C4ModelListener listener, String playerName) {
         try {
             if (this.player1 == null) {
@@ -49,7 +62,12 @@ class C4Model implements C4ViewListener {
     }
 
     /**
-     * @see C4ViewListener.addMarker()
+     * Informs the model that a marker should be added for the current player in the given column.
+     *
+     * @param playerNumber the player number for which the marker is to be added.;
+     * @param column the column in which the marker is to be added.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void addMarker(Integer playerNumber, Integer column) throws IOException {
         if (this.turn == playerNumber) {
@@ -73,7 +91,9 @@ class C4Model implements C4ViewListener {
     }
 
     /**
-     * @see C4ViewListener.clear()
+     * Informs the model to clear the game board.
+     *
+     * @exception IOException thrown if an I/O error occurred.
      */
     public void clear() throws IOException {
         try {
@@ -91,16 +111,24 @@ class C4Model implements C4ViewListener {
         }
     }
 
-    public void terminate() { this.terminated = true; }
-
+    /**
+     * Leave the game model.
+     */
     public void leave() {
         try {
-            this.player1.left();
-            this.player2.left();
+            if (this.player1 != null) this.player1.left();
+            if (this.player2 != null) this.player2.left();
 
-            this.terminate();
+            this.terminated = true;
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Indicates whether this game session has terminated already.
+     *
+     * @return whether this game session is terminated.
+     */
+    public Boolean isTerminated() { return this.terminated; }
 }

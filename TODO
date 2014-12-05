@@ -1,5 +1,2 @@
 - Fix win condition
-- Handle IO errors correctly
-- Remove all debugging
 - Prepare for submission
-- Fix error message when closing client

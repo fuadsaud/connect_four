@@ -55,32 +55,26 @@ class MessageReceiver {
 
             switch (command) {
                 case '#':
-                    System.out.println('#');
                     this.listener.number(in.readInt());
 
                     break;
                 case 'N':
-                    System.out.println('N');
                     this.listener.name(in.readInt(), in.readUTF());
 
                     break;
                 case 'T':
-                    System.out.println('T');
                     this.listener.turn(in.readInt());
 
                     break;
                 case 'A':
-                    System.out.println('A');
                     this.listener.markerAdded(in.readInt(), in.readInt(), in.readInt());
 
                     break;
                 case 'C':
-                    System.out.println('C');
                     this.listener.cleared();
 
                     break;
                 case 'L':
-                    System.out.println('L');
                     this.listener.left();
 
                     break;

@@ -53,8 +53,6 @@ public class C4ViewProxy implements C4ModelListener {
 
         Character command = in.readChar();
 
-        System.out.println(String.format("COMMAND: %s", command));
-
         switch (command) {
             case 'A':
                 Integer playerNumber = in.readInt();
@@ -62,21 +60,15 @@ public class C4ViewProxy implements C4ModelListener {
 
                 this.viewListener.addMarker(playerNumber, column);
 
-                System.out.println(String.format("%c %d %d", command, playerNumber, column));
-
                 break;
             case 'J':
                 String playerName = in.readUTF();
 
                 this.viewListener.join(C4ViewProxy.this, playerName);
 
-                System.out.println(String.format("%c %s", command, playerName));
-
                 break;
             case 'C':
                 this.viewListener.clear();
-
-                System.out.println(command);
 
                 break;
             case 'L':

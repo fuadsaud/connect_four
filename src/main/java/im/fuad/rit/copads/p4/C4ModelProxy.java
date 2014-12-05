@@ -90,7 +90,7 @@ class C4ModelProxy implements C4ViewListener {
     /**
      * Signals this client to terminate.
      */
-    private void terminate() { C4Client.terminate(); }
+    private void terminate() { C4Client.terminateWithError(); }
 
     /**
      * Runnable task for reading data from the server. Implements a server listener interaface to

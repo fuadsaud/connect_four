@@ -19,7 +19,7 @@ class ConnectFour {
      */
     public static void main(String[] args) { List<String> arguments = Arrays.asList(args);
 
-        if (arguments.size() != 3) {
+        if (arguments.size() != 5) {
             System.err.println("Wrong number of arguments: " + arguments.size() + " instead of 3");
 
             usage();
@@ -27,11 +27,13 @@ class ConnectFour {
             return;
         }
 
-        String host = arguments.get(0);
-        Integer port = Integer.valueOf(arguments.get(1));
-        String playerName = arguments.get(2);
+        String serverHost = arguments.get(0);
+        Integer serverPort = Integer.valueOf(arguments.get(1));
+        String clientHost = arguments.get(2);
+        Integer clientPort = Integer.valueOf(arguments.get(3));
+        String playerName = arguments.get(4);
 
-        new C4Client(host, port, playerName).call();
+        new C4Client(serverHost, serverPort, clientHost, clientPort, playerName).call();
     }
 
     /**
@@ -40,9 +42,11 @@ class ConnectFour {
     private static void usage() {
         System.err.println("USAGE:");
         System.err.println("\tjava ConnectFour <HOST> <PORT> <PLAYER_NAME>");
-        System.err.println("\t\t<HOST>: the host name or IP address of the server");
-        System.err.println("\t\t<PORT>: the port number of the server");
+        System.err.println("\t\t<SERVER_HOST>: the host name or IP address of the server");
+        System.err.println("\t\t<SERVER_PORT>: the port number of the server");
+        System.err.println("\t\t<CLIENT_HOST>: the host name or IP address of the client");
+        System.err.println("\t\t<CLIENT_PORT>: the port number of the client");
         System.err.println("\t\t<PLAYER_NAME>: the name of the player (must not include any whitespace)");
-        System.err.println("\n\t\tExample: java ConnectFour localhost 5678 Alex");
+        System.err.println("\n\t\tExample: java ConnectFour localhost 6789 localhost 5678 Alex");
     }
 }

@@ -12,9 +12,9 @@ PLAYER2NAME      = Brenda
 server: classes
 	cd bin; java $(SERVER_MAINCLASS) $(HOST) $(PORT)
 client1: classes
-	cd bin; java $(CLIENT_MAINCLASS) $(HOST) $(PORT) $(PLAYER1NAME)
+	cd bin; java $(CLIENT_MAINCLASS) $(HOST) $(PORT) localhost 5679 $(PLAYER1NAME)
 client2: classes
-	cd bin; java $(CLIENT_MAINCLASS) $(HOST) $(PORT) $(PLAYER2NAME)
+	cd bin; java $(CLIENT_MAINCLASS) $(HOST) $(PORT) localhost 5680 $(PLAYER2NAME)
 classes: clean outdir
 	$(JAVAC) -d $(OUTDIR) $(SOURCES)
 outdir:

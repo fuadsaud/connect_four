@@ -1,6 +1,5 @@
 - Fix win condition
 - Handle IO errors correctly
-- Check tie condition
 - Remove all debugging
-- Rework all documentation
 - Prepare for submission
+- Fix error message when closing client

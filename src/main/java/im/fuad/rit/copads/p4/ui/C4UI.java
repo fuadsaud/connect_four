@@ -196,7 +196,7 @@ public class C4UI implements C4ModelListener {
         try {
             this.viewListener.addMarker(playerNumber, column);
         } catch(IOException e) {
-            terminate();
+            terminateWithError();
         }
     }
 
@@ -207,7 +207,7 @@ public class C4UI implements C4ModelListener {
         try {
             this.viewListener.clear();
         } catch(IOException e) {
-            terminate();
+            terminateWithError();
         }
     }
 
@@ -218,7 +218,7 @@ public class C4UI implements C4ModelListener {
         try {
             this.viewListener.leave();
         } catch(IOException e) {
-            terminate();
+            terminateWithError();
         }
     }
 
@@ -235,7 +235,12 @@ public class C4UI implements C4ModelListener {
     private void setMessage(String message) { this.message.setText(message); }
 
     /**
-     * Asks for the termination of this client
+     * Asks for the termination of this client.
      */
     private void terminate() { C4Client.terminate(); }
+
+    /**
+     * Asks for the termination of this client with error status.
+     */
+    private void terminateWithError() { C4Client.terminateWithError(); }
 }

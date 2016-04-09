@@ -1,3 +1,2 @@
-- Implement diagonal win-condition check
-- Handle IO errors correctly
+- Fix win condition
 - Prepare for submission

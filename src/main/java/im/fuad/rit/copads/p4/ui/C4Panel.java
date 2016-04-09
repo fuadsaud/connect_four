@@ -1,4 +1,4 @@
-package im.fuad.rit.copads.p3.ui;
+package im.fuad.rit.copads.p4.ui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import java.awt.geom.Line2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import im.fuad.rit.copads.p3.C4BoardIntf;
+import im.fuad.rit.copads.p4.C4BoardIntf;
 
 /**
  * Class C4Panel provides a widget for displaying a Connect Four Board in a UI.

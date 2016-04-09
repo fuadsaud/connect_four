@@ -1,4 +1,4 @@
-package im.fuad.rit.copads.p3;
+package im.fuad.rit.copads.p4;
 
 /**
  * Interface C4BoardIntf specifies the interface for an object that implements
